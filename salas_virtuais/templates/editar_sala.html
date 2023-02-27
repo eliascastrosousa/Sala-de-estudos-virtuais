@@ -1,0 +1,90 @@
+<nav class="flex items-center justify-between flex-wrap bg-blue-800 p-6">
+    <div class="flex items-center flex-shrink-0 text-white mr-6">
+      <span class="font-semibold text-xl tracking-tight">Sala de Estudos Virtuais</span>
+    </div>
+  
+    <div class="font-semibold text-xl tracking-tight"> <!--w-full block flex-grow lg:flex lg:items-center lg:w-auto font-semibold text-xl tracking-tight-->
+  
+      
+      <div class="text-sm lg:flex-grow">
+        <a href="http://127.0.0.1:8000/" class="text-gray-100 hover:text-white mr-4">
+          Listagem
+        </a>
+        <a href="http://127.0.0.1:8000/criar_sala/" class="text-gray-100 hover:text-white mr-4">
+          Criação
+        </a>
+        <a href="#responsive-header" class="text-gray-100 hover:text-white">
+          Sair
+        </a>
+      </div>
+    </div>
+  </nav>
+  
+  {% extends 'base.html' %}
+  
+  {% block body %}
+  <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      {% csrf_token %}
+  
+          <h1 class="text-3xl font-bold mb-3 text-blue-800">Editar Sala</h1>
+          <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="nome">
+                Nome:
+              </label>
+              <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" name="nome" id="nome" type="text" value="{{ sala.nome }}" required>
+              
+            </div>
+          </div>
+  
+          <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full px-3">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="nome">
+                Descrição:
+              </label>
+              <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-6 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="descricao" id="descricao" type="text" value="{{ sala.descricao }}" required>
+            </div>
+          </div>
+  
+          <div class="flex flex-wrap -mx-3 mb-2">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="nome">
+                Categoria: 
+              </label>
+              
+              <div class="relative">
+                <select class="block appearance-none w-full bg-gray-200 border text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  name="categoria" id="categoria" required>
+                  <option selected disabled></option>
+                  {% for categoria in categorias %}
+                  <option value="{{ categoria.0 }}">{{ categoria.1 }}</option>
+                  {% endfor %}
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+              </div>
+            </div>
+            
+            <div class="w-full md:w-1/2 px-3 mb-4 md:mb-0">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="nome" id="limite">
+                Limite:
+              </label>
+              <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="limite" id="limite" type="number" value="1" min="1" max="99" value="{{ sala.limite_participantes }}" required>
+            </div>
+            
+            
+            <div class="w-full px-3 mb-4 ">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
+               <input class="button w-50px bg-orange-500 text-gray-50 border rounded py-3 px-4 mb-3" type="submit" value="Atualizar" required> <!-- verificar se ta funcionando sem chamar a classe apenas de button-->
+              </label>
+              
+            </div>
+          
+      
+            
+          </div>
+          <button class="bg-blue-800 font-semibold py-2 px-4   rounded"><a href="{% url 'index' %}">Voltar</a></button>
+        </form>
+        
+      {% endblock %}
+  
