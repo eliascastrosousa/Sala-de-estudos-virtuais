@@ -15,7 +15,7 @@ def criar_sala(request):
         nome = request.POST.get('nome', None)
         descricao = request.POST.get('descricao', None)
         categoria = request.POST.get('categoria', None)
-        limite_participantes = request.POST.get('limite', None)
+        limite_participantes = request.POST.get('limite', 50)
         nova_sala = Sala(nome=nome, descricao=descricao, categoria=categoria,limite_participantes=limite_participantes)
         nova_sala.save()
         return redirect('/')
