@@ -3,7 +3,7 @@
 Para utilizar o programa, execute os seguintes comandos:
 
 // Instalação do framework Django<br>
-<b>$ pip install django</b>
+<b>$ pip install -r requirements.txt</b>
 
 // Clonar para repositório local<br>
 <b>$ git clone https://github.com/RenanTinti/crud_stack_tech</b>
