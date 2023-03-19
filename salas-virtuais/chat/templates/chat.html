@@ -1,0 +1,19 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1 class="mb-5 font-bold text-3xl">Lets chat!</h1>
+
+<form id="form">
+    <div class="form-group">
+        <input type="text" name="message" class="form-control" placeholder="Digite aqui...">
+    </div>
+    <!--<input type="text" name="message"/>  -->
+</form>
+
+<div id="messages"></div>
+
+<script src="{% static 'js/chat.js' %}"></script>
+
+{% endblock content %}
