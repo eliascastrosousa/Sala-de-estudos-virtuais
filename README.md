@@ -15,7 +15,7 @@ Para utilizar o programa, execute os seguintes comandos:
 <b>$ python manage.py migrate</b>
 
 // Rodar o servidor<br>
-<b>$ python3 manage.py runserver</b>
+<b>$ python manage.py runserver</b>
 
 Se caso não tiver os Channels instalado, rodar comando 
 
@@ -23,7 +23,7 @@ Se caso não tiver os Channels instalado, rodar comando
 
 Depois rodar o comando 
 
-<b>$ python3 manage.py runserver</b>
+<b>$ python manage.py runserver</b>
 
 Abra o navegador no endereço http://127.0.0.1:8000/<br>
 
