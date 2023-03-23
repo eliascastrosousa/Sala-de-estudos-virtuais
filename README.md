@@ -6,18 +6,27 @@ Para utilizar o programa, execute os seguintes comandos:
 <b>$ pip install -r requirements.txt</b>
 
 // Clonar para repositório local<br>
-<b>$ git clone https://github.com/RenanTinti/crud_stack_tech</b>
+<b>$ git clone https://github.com/eliascastrosousa/Sala-de-estudos-virtuais</b>
 
 // Acessar o diretório do projeto<br>
-<b>$ cd crud_stack_tech</b>
+<b>$ cd Sala-de-estudos-virtuais</b>
 
 // Executar as migrações do banco de dados<br>
-<b>$ python3 manage.py migrate</b>
+<b>$ python manage.py migrate</b>
 
 // Rodar o servidor<br>
 <b>$ python3 manage.py runserver</b>
 
+Se caso não tiver os Channels instalado, rodar comando 
+
+<b> pip install channels </b>
+
+Depois rodar o comando 
+
+<b>$ python3 manage.py runserver</b>
+
 Abra o navegador no endereço http://127.0.0.1:8000/<br>
 
-// Executar testes automatizados<br>
+// Para executar testes automatizados<br>
 <b>$ python3 manage.py test salas_virtuais</b>
+
