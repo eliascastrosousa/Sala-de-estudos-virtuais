@@ -20,8 +20,8 @@ def register_page(request):
         password2 = request.POST.get('password2')
 
         if password1 == password2:
-            user = User(username=username, email=email, password=password1)
-            user.save()
+            user = User.objects.create_user(username=username, email=email, password=password1)
+            #user.save()
         else:
             messages.error(request, 'As senhas não coincidem')
 
@@ -33,10 +33,12 @@ def register_page(request):
 @unauthenticated_user
 def login_page(request):
     if request.method == "POST":
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        user = authenticate(request, email=email, password=password)
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        print(user)
         if user is not None:
+            print('sim')
             login(request, user)
             return redirect('lobby')
 

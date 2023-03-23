@@ -10,7 +10,7 @@ chatSocket.onmessage = function(e){
         let messages = document.getElementById('messages')
 
         messages.insertAdjacentHTML('beforeend', `<div>
-                                <p>${data.message}</p>
+                                <p>${data.username}: ${data.message}</p>
                             </div>`)
     }
 }
@@ -18,9 +18,11 @@ chatSocket.onmessage = function(e){
 let form = document.getElementById('form')
 form.addEventListener('submit', (e)=> {
     e.preventDefault()
-    let message = e.target.message.value 
+    let message = e.target.message.value
+    let username = e.target.username.value
     chatSocket.send(JSON.stringify({
-        'message':message
+        'message':message,
+        'username':username
     }))
     form.reset()
 })
