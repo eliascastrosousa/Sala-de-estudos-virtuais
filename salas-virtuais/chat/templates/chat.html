@@ -3,17 +3,33 @@
 
 {% block content %}
 
-<h1 class="mb-5 font-bold text-3xl">Lets chat!</h1>
+<h1 class="mb-5 font-bold text-3xl">Bem vindo! {{user}}</h1>
 
-<form id="form">
-    <div class="form-group">
-        <input type="text" name="message" class="form-control" placeholder="Digite aqui...">
+<div class="container text-center">
+    <div class="row">
+      <div class="col">
+        <b>Arquivos de Aula</b> 
+      </div>
+        <div class="col" >
+            <form id="form">
+                <div style="border-radius: 10px;"></div>
+                <div id="messages" style="background-color: #cbdfbd;height: 600px; "></div>
+                
+                <div class="input-group">
+                    
+                    <input type="text" name="message" class="form-control" placeholder="Digite aqui..."  aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Enviar</button>
+                </div>
+
+            </form>
+            
+            
+            
+            <script src="{% static 'js/chat.js' %}"></script>
+            
+            {% endblock content %}
+        </div>
+      
     </div>
-    <!--<input type="text" name="message"/>  -->
-</form>
+  </div>
 
-<div id="messages"></div>
-
-<script src="{% static 'js/chat.js' %}"></script>
-
-{% endblock content %}
