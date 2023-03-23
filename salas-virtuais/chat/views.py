@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
+
 from .decorators import unauthenticated_user
 
 from django.contrib.auth.models import User
@@ -33,6 +34,7 @@ def register_page(request):
 @unauthenticated_user
 def login_page(request):
     if request.method == "POST":
+        
         email = request.POST.get('email')
         password = request.POST.get('password')
         user = authenticate(request, email=email, password=password)
