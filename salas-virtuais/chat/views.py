@@ -59,3 +59,8 @@ def rooms(request):
 @login_required(login_url='login')
 def chat(request):
     return render(request, 'chat.html')
+
+
+@login_required(login_url='login')
+def perfil(request):
+    return render(request, 'perfil.html')
