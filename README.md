@@ -1,32 +1,47 @@
-<h2>ADS 5° Semestre - CRUD com Stack Tecnológico</h2>
+## Desenvolvimento Web - Salas-Virtuais
+### Tecnologias Utilizadas: Django, Bootstrap, Tailwind.
 
-Para utilizar o programa, execute os seguintes comandos:
+#### Para executar a aplicação, execute os seguintes comandos:
 
-// Instalação do framework Django<br>
-<b>$ pip install -r requirements.txt</b>
+Instalação do framework Django e Bibliotecas adicionais
+~~~powershell
+  pip install -r requirements.txt
+~~~
 
-// Clonar para repositório local<br>
-<b>$ git clone https://github.com/eliascastrosousa/Sala-de-estudos-virtuais</b>
+Clone para repositório local
+~~~powershell
+   git clone https://github.com/eliascastrosousa/Sala-de-estudos-virtuais
+~~~
 
-// Acessar o diretório do projeto<br>
-<b>$ cd Sala-de-estudos-virtuais</b>
 
-// Executar as migrações do banco de dados<br>
-<b>$ python manage.py migrate</b>
+Acessar o diretório do projeto<br>
+~~~powershell
+   cd Sala-de-estudos-virtuais
+   cd salas-virtuais
+~~~
 
-// Rodar o servidor<br>
-<b>$ python manage.py runserver</b>
+Executar as migrações do banco de dados
+~~~powershell
+   python manage.py migrate
+~~~
+
+Rodar o servidor
+~~~powershell
+   python manage.py runserver
+~~~
 
 Se caso não tiver os Channels instalado, rodar comando 
+~~~powershell
+   pip install channels
+~~~
 
-<b> pip install channels </b>
+Depois rodar o comando runserver
 
-Depois rodar o comando 
+Abra o navegador no endereço http://127.0.0.1:8000/
 
-<b>$ python manage.py runserver</b>
+Para executar testes automatizados
+~~~powershell
+   python manage.py test salas_virtuais
+~~~
 
-Abra o navegador no endereço http://127.0.0.1:8000/<br>
-
-// Para executar testes automatizados<br>
-<b>$ python3 manage.py test salas_virtuais</b>
 
