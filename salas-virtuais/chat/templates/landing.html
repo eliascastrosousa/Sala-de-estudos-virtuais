@@ -3,10 +3,47 @@
 
 {% block content %}
 
-<h1 class="mb-5 font-bold text-3xl">Landing</h1>
+<div class="container-md">
+    <h1 class="mb-5 font-bold text-3xl">Bem vindo a SalasVirtuais! </h1>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+              <img src="./static/img/undraw_online_discussion_re_nn7e.svg"  class="rounded float-start" alt="...">
+            </div>
+            <div class="col">
+                <h2> What is Lorem Ipsum? </h2>
+                <br>
+                <p class="card-text ">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
-<h2>É novo por aqui?<a href="{% url 'login' %}" class="ml-2">Entre</a> ou<a href="{% url 'register' %}" class="ml-2">Cadastre-se</a> 
-</div></h2>
+                </p>
+            </div>
+        </div>
+        <br><br><br>
+        <div class="row">
+            <div class="col">
+                <p class="card-text ">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            <div class="col">
+              <img src="./static/img/undraw_chatting_re_j55r.svg"  class="rounded float-start" alt="...">
+            </div>
+        </div>
+        <br><br><br>
+        <div class="row">
+          <div class="col">
+            <img src="./static/img/undraw_professor_re_mj1s.svg"  class="rounded float-start" alt="...">
+          </div>
+          <div class="col">
+            <p class="card-text ">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
+        </div>
+        <br>
+        
+        <br>
+      
+    </div>
+    <br>
+    <h2>Gostou? Acesse agora!<a href="{% url 'login' %}" class="ml-2">Entre</a> ou<a href="{% url 'register' %}" class="ml-2">Cadastre-se</a> 
+</div>
 
 
 {% endblock content %}
