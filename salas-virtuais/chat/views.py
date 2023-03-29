@@ -3,10 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
-
-
-
-from .decorators import unauthenticated_user
+from .utils import check_if_superuser, unauthenticated_user
 
 from django.contrib.auth.models import User
 
@@ -23,8 +20,10 @@ def register_page(request):
         password2 = request.POST.get('password2')
 
         if password1 == password2:
-            user = User.objects.create_user(username=username, email=email, password=password1)
-            #user.save()
+            if check_if_superuser(email=email):
+                user = User.objects.create_superuser(username=username, email=email, password=password1)
+            else:
+                user = User.objects.create_user(username=username, email=email, password=password1)
         else:
             messages.error(request, 'As senhas não coincidem')
 
