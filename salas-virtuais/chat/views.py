@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
+
 
 
 from .decorators import unauthenticated_user
@@ -64,3 +66,21 @@ def chat(request):
 @login_required(login_url='login')
 def perfil(request):
     return render(request, 'perfil.html')
+
+@login_required(login_url='login')
+def deslogar_usuario(request):
+    logout(request)
+    return redirect('landing')
+
+
+@login_required(login_url='login')
+def alterar_senha(request):
+    if request.method == "POST":
+        form_senha = PasswordChangeForm(request.user, request.POST)
+        if form_senha.is_valid():
+            user = form_senha.save()
+            update_session_auth_hash(request, user)
+            return redirect('index')
+    else:
+        form_senha = PasswordChangeForm(request.user)
+    return render(request, 'alterar_senha.html', {'form_senha': form_senha})
