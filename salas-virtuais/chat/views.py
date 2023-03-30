@@ -83,3 +83,8 @@ def alterar_senha(request):
     else:
         form_senha = PasswordChangeForm(request.user)
     return render(request, 'alterar_senha.html', {'form_senha': form_senha})
+
+
+@login_required(login_url='login')
+def criar_sala(request):
+    return render(request, 'criar_sala.html')

@@ -11,6 +11,7 @@ urlpatterns = [
     path('perfil', perfil, name='perfil'),
     path('alterar_senha', alterar_senha, name='alterar_senha'),
     path('deslogar_usuario', deslogar_usuario, name='deslogar_usuario'),
+    path('criar_sala', criar_sala, name='criar_sala'),
     
 
     

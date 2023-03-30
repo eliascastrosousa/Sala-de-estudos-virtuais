@@ -19,3 +19,4 @@ def check_if_superuser(email: str) -> bool:
     
     return True if email_provider == ADMIN_PROVIDER else False
     
+    
