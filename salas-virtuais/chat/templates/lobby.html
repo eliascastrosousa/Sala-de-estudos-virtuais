@@ -3,8 +3,16 @@
 
 {% block content %}
 
-<h1 class="mb-5 font-bold text-3xl">Welcome, {{ request.user.username }}</h1>
+<h1 class="mb-5 font-bold text-3xl">Bem vindo, {{ request.user.username }}</h1>
 
-
+<div class="card" style="width: 18rem;">
+    <img src="./static/img/undraw_ideas_re_7twj.svg" class="card-img-top" alt="...">
+    
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> <br>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div>
 
 {% endblock content %}
