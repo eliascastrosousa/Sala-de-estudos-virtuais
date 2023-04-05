@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from .utils import check_if_superuser, unauthenticated_user
-
+from .models import Sala, CATEGORIAS
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -87,4 +87,14 @@ def alterar_senha(request):
 
 @login_required(login_url='login')
 def criar_sala(request):
-    return render(request, 'criar_sala.html')
+    categorias = CATEGORIAS
+    if request.method == 'POST':
+        nome = request.POST.get('nome', None)
+        descricao = request.POST.get('descricao', None)
+        categoria = request.POST.get('categoria', None)
+        limite_participantes = request.POST.get('limite', None)
+        nova_sala = Sala(nome=nome, descricao=descricao, categoria=categoria,limite_participantes=limite_participantes)
+        nova_sala.save()
+        return redirect('/')
+    context = {'categorias': categorias}
+    return render(request, 'criar_sala.html', context)
