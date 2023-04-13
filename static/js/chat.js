@@ -1,4 +1,8 @@
-let url = `ws://${window.location.host}/ws/socket-server/`
+let path = window.location.pathname;
+let pathParts = path.split('/');
+let roomName = pathParts[pathParts.length - 2];
+
+let url = `ws://${window.location.host}/ws/socket-server/${roomName}/`
 
 const chatSocket = new WebSocket(url)
 
