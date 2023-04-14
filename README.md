@@ -1,6 +1,10 @@
 # Sala-de-estudos-virtuais
 Projeto de Laboratório de Desenvolvimento de Sistemas 5º Semestre do IFSP
 
+Para o chat funcionar, é necessário instalar o VS Microsoft C++ Build Tools:
+
+https://github.com/bycloudai/InstallVSBuildToolsWindows
+
 ~~~powershell
   git clone https://github.com/eliascastrosousa/Sala-de-estudos-virtuais
 ~~~
