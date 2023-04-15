@@ -3,16 +3,17 @@
 
 {% block content %}
 
-<h1 class="mb-5 font-bold text-3xl">Olá, {{ request.user.username }}!</h1>
+<h1 class="mb-5 font-bold text-3xl ">Olá, {{ request.user.username }}!</h1>
 
-<div class="container-sm">
+<div class="container-sm text-3xl">
     <h2> Detalhes do Usuario </h2>
+    <hr> 
     <br>
-    <p> Email </p>
-    <p> {{request.user.email}}</p>
-
-    <a class="text-blue-700" href="{% url 'alterar_senha' %}" class="ml-2"><p> Alterar senha </p> </a>
-    <a class="text-blue-700" href="{% url 'deslogar_usuario' %}" class="ml-2"><p> Logout </p> </a>
+    <p class="text-2xl"> Email </p>
+    <p class="text-2xl"> {{request.user.email}}</p>
+  <br>
+    <a class="text-blue-700" href="{% url 'alterar_senha' %}" class="ml-2"><p class="text-3xl"> Alterar senha </p> </a>
+    <a class="text-blue-700" href="{% url 'deslogar_usuario' %}" class="ml-2"><p class="text-2xl"> Logout </p> </a>
     
   </div>
 

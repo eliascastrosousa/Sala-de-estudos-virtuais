@@ -3,28 +3,50 @@
 
 {% block content %}
 
-<h1 class="text-3xl font-bold mb-3">Criar Sala</h1>
+<h1 class="mb-5 font-bold text-3xl ">Olá, {{ request.user.username }}!</h1>
 
-<form method="post">
-    {% csrf_token %}
-    <label for="nome">Nome:</label>
-    <input type="text" name="nome" id="nome" required>
-    <label for="nome">Descrição:</label>
-    <input type="text" name="descricao" id="descricao" required>
-    <label for="nome">Categoria:</label>
-    <select name="categoria" id="categoria" required>
-        <option selected disabled></option>
-        {% for categoria in categorias %}
-        <option value="{{ categoria.0 }}">{{ categoria.1 }}</option>
-        {% endfor %}
-    </select>
-    <label for="nome" id="limite">Limite:</label>
-    <input type="number" name="limite" id="limite" value="1" min="1" max="99" required>
+<div class="container-sm text-3xl">
+    <h2> Criar Sala </h2>
+    <hr> 
+    <br>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="text-3xl" for="nome">Nome:</label>
+            <input type="text" name="nome" id="nome" required>
+        </div>
 
-    <input type="submit" value="Criar">
-</form>
+        <div class="mb-3">
+            <label for="nome" class="text-3xl mb-2">Descrição:</label>
+            <input type="text" name="descricao" id="descricao" required>
+        </div>
 
-<a href="{% url 'lobby' %}">Voltar</a>
+        <div class="mb-3">
+            <label for="nome" class="text-3xl mb-2">Categoria:</label>
+            <select name="categoria" id="categoria" required>
+
+                <option selected disabled></option>
+                {% for categoria in categorias %}
+                <option value="{{ categoria.0 }}">{{ categoria.1 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="nome" class="text-3xl mb-2" id="limite">Limite:</label>
+            <input type="number" name="limite" id="limite" value="1" min="1" max="99" required>
+        </div>
+
+        <div class="mb-3">
+            <button type="button" class="btn btn-success"><input type="submit" value="Criar"></button>
+            <button type="button" class="btn btn-danger"><a href="{% url 'lobby' %}">Voltar</a></button>
+        </div>
+    </form>
+
+</div>
+
+
+
 
 
 {% endblock content %}
