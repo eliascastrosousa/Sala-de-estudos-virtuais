@@ -58,8 +58,9 @@ def rooms(request):
     return render(request, 'rooms.html')
 
 @login_required(login_url='login')
-def chat(request):
-    return render(request, 'chat.html')
+def chat(request, room_name):
+    context = {'room_name': room_name}
+    return render(request, 'chat.html', context)
 
 
 @login_required(login_url='login')

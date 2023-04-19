@@ -1,16 +1,43 @@
 # Sala-de-estudos-virtuais
 Projeto de Laboratório de Desenvolvimento de Sistemas 5º Semestre do IFSP
 
-git clone https://github.com/eliascastrosousa/Sala-de-estudos-virtuais
+Para o chat funcionar, é necessário instalar o VS Microsoft C++ Build Tools:
 
-python -m venv env
+https://github.com/bycloudai/InstallVSBuildToolsWindows
 
-.\env\scripts\activate
+~~~powershell
+  git clone https://github.com/eliascastrosousa/Sala-de-estudos-virtuais
+~~~
 
-pip install -r requirements.txt
+~~~powershell
+  python -m venv env
+~~~
 
-python manage.py makemigrations
+~~~powershell
+  .\env\scripts\activate
+~~~
 
-python manage.py migrate
+~~~powershell
+  pip install -r requirements.txt
+~~~
 
-python manage.py runserver
+~~~powershell
+  python manage.py makemigrations
+~~~
+
+~~~powershell
+  python manage.py migrate
+~~~
+
+~~~powershell
+  python manage.py runserver
+~~~
+![image](https://user-images.githubusercontent.com/73971067/232124201-d93c99a9-f0bc-43f9-8eea-70d03978cce6.png)
+![image](https://user-images.githubusercontent.com/73971067/232124116-e6050146-1411-48d3-b482-044785038d2c.png)
+![image](https://user-images.githubusercontent.com/73971067/232124338-6a4102d5-f4a8-4c00-9aa2-66d3160f62cf.png)
+
+
+
+
+
+
