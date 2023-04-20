@@ -8,6 +8,7 @@ from .models import Sala, CATEGORIAS
 from django.contrib.auth.models import User
 
 # Create your views here.
+@unauthenticated_user
 def landing(request):
     return render(request, 'landing.html')
 
@@ -51,7 +52,9 @@ def login_page(request):
 
 @login_required(login_url='login')
 def lobby(request):
-    return render(request, 'lobby.html')
+    salas = Sala.objects.all()
+    context = {'salas': salas}
+    return render(request, 'lobby.html', context)
 
 @login_required(login_url='login')
 def rooms(request):

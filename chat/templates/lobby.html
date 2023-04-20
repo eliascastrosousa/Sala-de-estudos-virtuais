@@ -10,18 +10,17 @@
   <hr>
   <br>
   <div class="row">
-    <div class="col-3">
-      <div class="input-group mb-3">
-        <div class="card" style="width: 18rem;">
-          <img src="/static/img/coruja.png" class="card-img-top" alt="...">
-
-          <div class="card-body">
-            <h5 class="card-title">Laboratorio de Software</h5>
-            <p class="card-text">Card Sala Exemplo </p> <br>
-            <a href="#" class="btn btn-primary">Entrar</a>
-          </div>
+    <div class="input-group mb-3">
+      {% for sala in salas %}
+      <div class="card" style="width: 18rem;">
+        <img src="/static/img/coruja.png" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{ sala.nome }}</h5>
+          <p class="card-text">{{ sala.descricao }}</p> <br>
+          <a href="#" class="btn btn-primary">Entrar</a>
         </div>
       </div>
+      {% endfor %}
     </div>
   </div>
 </div>

@@ -15,6 +15,9 @@ class Sala(models.Model):
     categoria = models.CharField(choices=CATEGORIAS, max_length=100)
     limite_participantes = models.IntegerField(default=50)
     data_criacao = models.DateTimeField(auto_now_add=True)
+    sala_url = models.CharField(max_length=500)
 
     def __str__(self):
         return self.nome
+    
+    
