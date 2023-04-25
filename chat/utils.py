@@ -13,11 +13,15 @@ def unauthenticated_user(view_func):
     
     return wrapper_func
 
-
 def check_if_superuser(email: str) -> bool:
     splitted_email = email.split('@')
     email_provider = splitted_email[1]
     
     return True if email_provider == ADMIN_PROVIDER else False
     
-    
+def clean_room_name(room_name: str) -> str:
+    room_name = room_name.lower()
+    room_name = room_name.replace(" ", "-")
+    room_name = room_name + "-"
+
+    return room_name

@@ -1,5 +1,7 @@
 from django.db import models
 
+from .utils import clean_room_name
+
 # Create your models here.
 
 CATEGORIAS = (
@@ -15,9 +17,10 @@ class Sala(models.Model):
     categoria = models.CharField(choices=CATEGORIAS, max_length=100)
     limite_participantes = models.IntegerField(default=50)
     data_criacao = models.DateTimeField(auto_now_add=True)
-    sala_url = models.CharField(max_length=500)
+    
+    @property
+    def sala_nome(self):      
+        return clean_room_name(self.sala_nome) + str(self.id)
 
     def __str__(self):
         return self.nome
-    
-    
