@@ -1,26 +1,20 @@
 from django.db import models
 
-from .utils import clean_room_name
-
 # Create your models here.
 
-CATEGORIAS = (
+CATEGORIES = (
     ('Programacao', 'Programação'),
     ('Design', 'Design'),
     ('Jogos_digitais', 'Jogos Digitais'),
     ('Mobile', 'Mobile'),
 )
 
-class Sala(models.Model):
-    nome = models.CharField(max_length=100)
-    descricao = models.CharField(max_length=255)
-    categoria = models.CharField(choices=CATEGORIAS, max_length=100)
-    limite_participantes = models.IntegerField(default=50)
-    data_criacao = models.DateTimeField(auto_now_add=True)
-    
-    @property
-    def sala_nome(self):      
-        return clean_room_name(self.sala_nome) + str(self.id)
+class Room(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=255)
+    category = models.CharField(choices=CATEGORIES, max_length=100)
+    max_participants = models.IntegerField(default=50)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.nome
+        return self.name

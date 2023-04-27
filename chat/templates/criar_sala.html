@@ -26,8 +26,8 @@
             <select name="categoria" id="categoria" required>
 
                 <option selected disabled></option>
-                {% for categoria in categorias %}
-                <option value="{{ categoria.0 }}">{{ categoria.1 }}</option>
+                {% for category in categories %}
+                <option value="{{ categoria.0 }}">{{ category.1 }}</option>
                 {% endfor %}
             </select>
         </div>
