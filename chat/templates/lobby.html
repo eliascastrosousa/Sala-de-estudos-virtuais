@@ -6,22 +6,21 @@
 <h1 class="mb-5 font-bold text-3xl ">Olá, {{ request.user.username }}!</h1>
 
 <div class="container-sm text-3xl">
-  <h2> Detalhes do Usuario </h2>
+  <h2> Lobby </h2>
   <hr>
   <br>
   <div class="row">
-    <div class="col-3">
-      <div class="input-group mb-3">
-        <div class="card" style="width: 18rem;">
-          <img src="/static/img/coruja.png" class="card-img-top" alt="...">
-
-          <div class="card-body">
-            <h5 class="card-title">Laboratorio de Software</h5>
-            <p class="card-text">Card Sala Exemplo </p> <br>
-            <a href="#" class="btn btn-primary">Entrar</a>
-          </div>
+    <div class="input-group mb-3">
+      {% for room in rooms %}
+      <div class="card" style="width: 18rem;">
+        <img src="/static/img/coruja.png" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{ room.name }}</h5>
+          <p class="card-text">{{ room.description }}</p> <br>
+          <a href="{% url 'chat' room.id %}" class="btn btn-primary">Entrar</a>
         </div>
       </div>
+      {% endfor %}
     </div>
   </div>
 </div>

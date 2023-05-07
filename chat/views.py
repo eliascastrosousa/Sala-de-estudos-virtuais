@@ -4,10 +4,11 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from .utils import check_if_superuser, unauthenticated_user
-from .models import Sala, CATEGORIAS
+from .models import Room, CATEGORIES
 from django.contrib.auth.models import User
 
 # Create your views here.
+@unauthenticated_user
 def landing(request):
     return render(request, 'landing.html')
 
@@ -51,15 +52,17 @@ def login_page(request):
 
 @login_required(login_url='login')
 def lobby(request):
-    return render(request, 'lobby.html')
+    rooms = Room.objects.all()
+    context = {'rooms': rooms}
+    return render(request, 'lobby.html', context)
 
 @login_required(login_url='login')
 def rooms(request):
     return render(request, 'rooms.html')
 
 @login_required(login_url='login')
-def chat(request, room_name):
-    context = {'room_name': room_name}
+def chat(request, room_id):
+    context = {'room_name': room_id}
     return render(request, 'chat.html', context)
 
 
@@ -88,14 +91,14 @@ def alterar_senha(request):
 
 @login_required(login_url='login')
 def criar_sala(request):
-    categorias = CATEGORIAS
+    categories = CATEGORIES
     if request.method == 'POST':
-        nome = request.POST.get('nome', None)
-        descricao = request.POST.get('descricao', None)
-        categoria = request.POST.get('categoria', None)
-        limite_participantes = request.POST.get('limite', None)
-        nova_sala = Sala(nome=nome, descricao=descricao, categoria=categoria,limite_participantes=limite_participantes)
-        nova_sala.save()
+        name = request.POST.get('nome', None)
+        description = request.POST.get('descricao', None)
+        category = request.POST.get('categoria', None)
+        max_participants = request.POST.get('limite', None)
+        new_room = Room(name=name, description=description, category=category, max_participants=max_participants)
+        new_room.save()
         return redirect('/')
-    context = {'categorias': categorias}
+    context = {'categories': categories}
     return render(request, 'criar_sala.html', context)
