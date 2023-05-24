@@ -38,11 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'chat',
-
-    
-    'channels',
+    'usuarios',
+    'chat',   
+    'channels'
 ]
 
 ASGI_APPLICATION = 'projeto.asgi.application'

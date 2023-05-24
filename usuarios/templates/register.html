@@ -13,6 +13,12 @@
     <form method="POST">
         {% csrf_token %}
         <div class="input-group mb-3">
+            <input type="text" name="first_name" placeholder="Seu nome" class="form-control">
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" name="last_name" placeholder="Sobrenome" class="form-control">
+        </div>
+        <div class="input-group mb-3">
             <input type="text" name="username" placeholder="Username..." class="form-control">
         </div>
         <div class="input-group mb-3">
@@ -27,7 +33,7 @@
 
         <div class="d-flex justify-content-center mt-3 login_container">
             <input class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded" type="submit"
-                value="Login">
+                value="Cadastrar">
         </div>
     </form>
 
@@ -43,7 +49,7 @@
             Já tem uma conta?
         </div>
         <div class="d-flex justify-content-center links">
-            <a href="{% url 'login' %}" class="ml-2 text-blue-700">Cadastrar</a>
+            <a href="{% url 'login' %}" class="ml-2 text-blue-700">Fazer Login</a>
         </div>
     </div>
 </div>
