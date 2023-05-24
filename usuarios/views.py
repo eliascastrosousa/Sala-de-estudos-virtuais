@@ -24,14 +24,19 @@ def register_page(request):
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
 
+        res = ''.join(random.choices(string.ascii_uppercase + string.digits, k = 4)) 
+        chave_mestra = str(res)
+        codigo = pyotp.TOTP(chave_mestra)
+
         if password1 == password2:
+
             registration_data = {
                 'first_name': first_name,
                 'last_name': last_name,
                 'username': username,
                 'email': email,
                 'password1': password1,
-                'codigoenviado': 1234 #dps automatizar o codigo 
+                'codigoenviado': codigo.now()
             }
         
             request.session['registration_data'] = registration_data
@@ -55,7 +60,7 @@ def register2(request):
 
             first_name = registration_data.get('first_name')
             last_name = registration_data.get('last_name')
-            username = registration_data.get('username'),
+            username = registration_data.get('username')
             email = registration_data.get('email')
             password = registration_data.get('password1')
             codigoenviado = registration_data.get('codigoenviado')
@@ -68,7 +73,7 @@ def register2(request):
             print(type(codigorecebido))
             print(type(codigoenviado))
 
-
+            
             if str(codigorecebido) == str(codigoenviado):
                 print(codigorecebido , codigoenviado)
                     
@@ -90,7 +95,7 @@ def register2(request):
                         password = password)
                     print("\nconta criada user padrao")
             
-                messages.success(request, 'Conta criada com sucesso para ' , user.username)
+                messages.success(request, 'Conta criada com sucesso ')
                 print(codigorecebido , codigoenviado)
                 return redirect('login')
             else: 
@@ -115,7 +120,7 @@ def login_page(request):
             return redirect('lobby')
 
         else:
-            messages.info(request, 'E-mail ou senha incorretos')
+            messages.info(request, 'Username ou senha incorretos')
 
     return render(request, 'login.html')
 
