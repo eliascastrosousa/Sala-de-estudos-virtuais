@@ -35,52 +35,71 @@ def register_page(request):
             }
         
             request.session['registration_data'] = registration_data
+            print("page register 1")
+            print(registration_data)
+            print(request.session['registration_data'])
+            print("------------")
+
             return redirect('register2')
         
         else:
             messages.error(request, 'As senhas não coincidem')
     return render(request, 'register.html')
 
+@unauthenticated_user
 def register2(request):
     if request.method == "POST":
         registration_data = request.session.get('registration_data', None) #traz os dados salvo na session
-
         if registration_data is not None:
-            print('não esta vazio', registration_data('first_name'))
-            
-            codigorecebido = request.POST.get('codigoautenticacao')
-            codigoenviado = registration_data.get('codigoenviado')
+            codigorecebido = request.POST['codigoautenticacao']
 
-            if codigorecebido == codigoenviado:
-                
-                if check_if_superuser(email=registration_data.get('email')):
+            first_name = registration_data.get('first_name')
+            last_name = registration_data.get('last_name')
+            username = registration_data.get('username'),
+            email = registration_data.get('email')
+            password = registration_data.get('password1')
+            codigoenviado = registration_data.get('codigoenviado')
+            print("register 2 dados salvos em variavel")
+            print("nome do usuario: "+ first_name, last_name, username, email, password, codigoenviado)
+            print(registration_data)
+            print(request.session['registration_data'])
+
+            print(codigorecebido,codigoenviado)
+            print(type(codigorecebido))
+            print(type(codigoenviado))
+
+
+            if str(codigorecebido) == str(codigoenviado):
+                print(codigorecebido , codigoenviado)
+                    
+                if check_if_superuser(email=email):
                     user = User.objects.create_superuser(
-                        first_name = registration_data.get('first_name'),
-                        last_name = registration_data.get('last_name'),
-                        username = registration_data.get('username'), 
-                        email = registration_data.get('email'),
-                        password = registration_data.get('password1'))
+                        first_name = first_name,
+                        last_name = last_name,
+                        username = str(username), 
+                        email = email,
+                        password = password)
+                    print("\nconta criada superuser")
+                        
                 else:
                     user = User.objects.create_user(
-                        first_name = registration_data.get('first_name'),
-                        last_name = registration_data.get('last_name'),
-                        username = registration_data.get('username'), 
-                        email = registration_data.get('email'),
-                        password = registration_data.get('password1'))
-                
-                
-                messages.success(request, 'Conta criada com sucesso para ' + user.username)
-                return redirect('login')
-
-            messages.error(request, 'Os codigos não coincidem')
+                        first_name = first_name,
+                        last_name = last_name,
+                        username = str(username), 
+                        email = email,
+                        password = password)
+                    print("\nconta criada user padrao")
             
-        else: 
-            messages.error(request, 'Nenhum dado de usuario recebido')
-            print('esta vazio')
+                messages.success(request, 'Conta criada com sucesso para ' , user.username)
+                print(codigorecebido , codigoenviado)
+                return redirect('login')
+            else: 
+                print(codigorecebido,codigoenviado)
+                messages.error(request, 'Os codigos não coincidem')
 
-    if 'registration_data' in request.session:
-                    del request.session['registration_data']
-
+        if 'registration_data' in request.session:
+            del request.session['registration_data']
+    
     return render(request, 'register2.html')
 
 @unauthenticated_user
