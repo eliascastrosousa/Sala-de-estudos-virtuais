@@ -3,11 +3,12 @@ from django.db import models
 # Create your models here.
 
 CATEGORIES = (
-    ('Programacao', 'Programação'),
-    ('Design', 'Design'),
-    ('Jogos_digitais', 'Jogos Digitais'),
-    ('Mobile', 'Mobile'),
+    ("Programacao", "Programação"),
+    ("Design", "Design"),
+    ("Jogos_digitais", "Jogos Digitais"),
+    ("Mobile", "Mobile"),
 )
+
 
 class Room(models.Model):
     name = models.CharField(max_length=100)
