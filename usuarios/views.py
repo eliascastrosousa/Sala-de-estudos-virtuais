@@ -13,6 +13,53 @@ import pyotp
 import win32com.client as win32
 import smtplib
 import email.message
+import smtplib
+import email.message
+
+def enviar_email(first_name, emailusuario, codigo):
+    print(first_name, emailusuario, codigo)
+    corpo_email = """
+            <!DOCTYPE html>
+        <html lang="pt-br">
+        <head>
+            <meta charset="UTF-8">
+            <title>Cogido para Autenticação</title>
+        </head>
+        <body>
+        <!-- email_autenticacao.html -->
+        <h1>Olá , """ + str(first_name) + """</h1>
+        <hr>
+        <h2>Recebemos a solicitação de codigo para conclusão do cadastro de usuario em Sala de Estudos.</h2>
+		<br>
+        <h2><strong> Codigo: """ + str(codigo.now()) + """</strong> </h2>
+		<br>
+
+        <h2>Para concluir o seu perfil, utilize o codigo acima.</h2>
+        <h2>Obrigado por nos ajudar a manter sua conta segura.</h2>
+		-----
+        <h3>Atenciosamente</h3>
+        <h3>A equipe da Sala de Estudos Virtuais</h3>
+
+        </body>
+        </html>
+    """
+    print(str(emailusuario))
+    print(str(corpo_email))
+
+    msg = email.message.Message()
+    msg['Subject'] = "Seu codigo de uso único"
+    msg['From'] = 'sala.de.estudos.ifsp@gmail.com'
+    msg['To'] = str(emailusuario)
+    password = 'nohsxnlerpfdpyqy'
+    msg.add_header('Content-Type', 'text/html')
+    msg.set_payload(corpo_email )
+
+    s = smtplib.SMTP('smtp.gmail.com: 587')
+    s.starttls()
+    # Login Credentials for sending the mail
+    s.login(msg['From'], password)
+    s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
+    print('Email enviado')
 
 @unauthenticated_user
 def register_page(request):
@@ -28,7 +75,9 @@ def register_page(request):
         chave_mestra = str(res)
         codigo = pyotp.TOTP(chave_mestra)
 
+
         if password1 == password2:
+            
 
             registration_data = {
                 'first_name': first_name,
@@ -44,6 +93,8 @@ def register_page(request):
             print(registration_data)
             print(request.session['registration_data'])
             print("------------")
+            emailusuario = email
+            enviar_email(first_name, emailusuario, codigo)
 
             return redirect('register2')
         
