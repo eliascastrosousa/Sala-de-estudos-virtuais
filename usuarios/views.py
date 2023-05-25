@@ -5,12 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from .utils import check_if_superuser, unauthenticated_user
 from django.contrib.auth.models import User
-from django.http import HttpResponse
 import string 
 import random
-import time
 import pyotp
-import win32com.client as win32
 import smtplib
 import email.message
 import smtplib
@@ -23,7 +20,7 @@ def enviar_email(first_name, emailusuario, codigo):
         <html lang="pt-br">
         <head>
             <meta charset="UTF-8">
-            <title>Cogido para Autenticação</title>
+            <title>Codigo para Autenticação</title>
         </head>
         <body>
         <!-- email_autenticacao.html -->
@@ -31,7 +28,7 @@ def enviar_email(first_name, emailusuario, codigo):
         <hr>
         <h2>Recebemos a solicitação de codigo para conclusão do cadastro de usuario em Sala de Estudos.</h2>
 		<br>
-        <h2><strong> Codigo: """ + str(codigo.now()) + """</strong> </h2>
+        <h2>Codigo:<strong> """ + str(codigo.now()) + """</strong> </h2>
 		<br>
 
         <h2>Para concluir o seu perfil, utilize o codigo acima.</h2>
@@ -64,6 +61,7 @@ def enviar_email(first_name, emailusuario, codigo):
 @unauthenticated_user
 def register_page(request):
     if request.method == "POST":
+        
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         username = request.POST.get('username')
@@ -75,19 +73,18 @@ def register_page(request):
         chave_mestra = str(res)
         codigo = pyotp.TOTP(chave_mestra)
 
-
-        if password1 == password2:
-            
-
-            registration_data = {
-                'first_name': first_name,
-                'last_name': last_name,
-                'username': username,
-                'email': email,
-                'password1': password1,
-                'codigoenviado': codigo.now()
-            }
         
+        if password1 == password2:
+                
+            registration_data = {
+                    'first_name': first_name,
+                    'last_name': last_name,
+                    'username': username,
+                    'email': email,
+                    'password1': password1,
+                    'codigoenviado': codigo.now()
+                }
+            
             request.session['registration_data'] = registration_data
             print("page register 1")
             print(registration_data)
@@ -97,7 +94,6 @@ def register_page(request):
             enviar_email(first_name, emailusuario, codigo)
 
             return redirect('register2')
-        
         else:
             messages.error(request, 'As senhas não coincidem')
     return render(request, 'register.html')
@@ -146,7 +142,7 @@ def register2(request):
                         password = password)
                     print("\nconta criada user padrao")
             
-                messages.success(request, 'Conta criada com sucesso ')
+                messages.success(request, 'Conta criada com sucesso para '+ username)
                 print(codigorecebido , codigoenviado)
                 return redirect('login')
             else: 
