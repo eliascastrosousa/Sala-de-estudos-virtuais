@@ -22,7 +22,7 @@ chatSocket.onmessage = function(e){
 let form = document.getElementById('form')
 form.addEventListener('submit', (e)=> {
     e.preventDefault()
-    let message = e.target.message.value
+    let message = e.target.messageInput.value
     let username = e.target.username.value
     chatSocket.send(JSON.stringify({
         'message':message,
