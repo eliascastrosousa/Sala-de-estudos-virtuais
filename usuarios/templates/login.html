@@ -1,40 +1,38 @@
 {% extends 'main.html' %}
+
 {% load static %}
 
 {% block content %}
+    <link rel="stylesheet" type="text/css" href="/static/css/registercss.css"/>
 
-
-<div class="p-3 container-sm text-3xl">
-
-    <form class="form-signin" method="POST">
-        {% csrf_token %}
-      <img class="mb-4" src="/static/img/coruja.png" alt="" width="72" height="72">
-      <h1 class="h3 mb-3 font-semibold">Faça login</h1>
-      
-      <label for="text" class="sr-only p-1">Username</label>
-      <input type="text" name="username" placeholder="Username" class="form-control" required autofocus>
-      
-      <label for="inputPassword" class="sr-only p-1">Senha</label>
-      <input type="password" name="password" placeholder="Password" class="form-control" required>
-      
-      <button class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded" type="submit" value="Login">Login</button>
-    </form>
-
-</div>
-
-{% for message in messages %}
-<p id="messages">{{ message }}</p>
-{% endfor %}
-
-<div>
-    <div class="d-flex justify-content-center links">
-        <div>Não possui conta?</div>
-    </div>
-    <div class="d-flex justify-content-center links">
-        <div><a class="text-blue-700" href="{% url 'register' %}" class="ml-2"> Registre-se</a></div>
-    </div>
-</div>
-
-
-
+    <body style="background-image: url(https://user-images.githubusercontent.com/13468728/233847739-219cb494-c265-4554-820a-bd3424c59065.jpg);">
+        
+        <div class="p-3 container-sm text-3xl">
+            <section>
+                <form class="form-signin" method="POST">
+                    {% csrf_token %}
+                    
+                    <img src="/static/img/coruja.png" width="72" height="72">
+                    <h1>Login</h1>
+                    
+                    <div class="inputbox">
+                        <input type="text" name="username" placeholder="Username" class="form-control" required autofocus>
+                        <label for="text" class="sr-only p-1">Username</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="password" name="password" placeholder="Password" class="form-control" required>
+                        <label for="inputPassword" class="sr-only p-1">Password</label>
+                    </div>
+                    {% for message in messages %}
+                    <p id="messages">{{ message }}</p>
+                    {% endfor %}
+                    <button type="submit" value="Login">Log in</button>
+                    <div class="register">
+                        <p>Não possui conta?<a href="{% url 'register' %}"> Registre-se</a></p>
+                        
+                    </div>
+                </form>
+            </section>
+        </div>
+    </body>
 {% endblock content %}

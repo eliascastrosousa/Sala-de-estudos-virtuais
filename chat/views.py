@@ -6,7 +6,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from chat.forms import MessageForm
 from .models import Room, CATEGORIES
 from django.contrib.auth.models import User
-from utils import unauthenticated_user
+from .utils import unauthenticated_user
 
 @unauthenticated_user
 def landing(request):
