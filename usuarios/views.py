@@ -13,6 +13,10 @@ import email.message
 import smtplib
 import email.message
 
+@unauthenticated_user
+def landing(request):
+    return render(request, "landing.html")
+
 def enviar_email(first_name, emailusuario, codigo):
     print(first_name, emailusuario, codigo)
     corpo_email = """
