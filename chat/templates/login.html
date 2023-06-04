@@ -1,0 +1,42 @@
+{% extends 'main.html' %}
+
+    {% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/registercss.css"/>
+
+<body style="background-image: url(https://user-images.githubusercontent.com/13468728/233847739-219cb494-c265-4554-820a-bd3424c59065.jpg);">
+    
+    <div class="p-3 container-sm text-3xl">
+        <section>
+            <form class="form-signin" method="POST">
+                {% csrf_token %}
+                
+                <img src="/static/img/coruja.png" width="72" height="72">
+                <h1>Login</h1>
+                
+                <div class="inputbox">
+                    <input type="text" name="username" placeholder="Username" class="form-control" required autofocus>
+                    <label for="text" class="sr-only p-1">Username</label>
+                </div>
+                <div class="inputbox">
+                    <input type="password" name="password" placeholder="Password" class="form-control" required>
+                    <label for="inputPassword" class="sr-only p-1">Password</label>
+                </div>
+                {% for message in messages %}
+                <p id="messages">{{ message }}</p>
+                {% endfor %}
+                <button type="submit" value="Login">Log in</button>
+                <div class="register">
+                    <p>Não possui conta?<a href="{% url 'register' %}"> Registre-se</a></p>
+                    
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+
+
+
+{% endblock content %}
+

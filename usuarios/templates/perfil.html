@@ -2,20 +2,27 @@
 {% load static %}
 
 {% block content %}
-
-<h1 class="mb-5 font-bold text-3xl ">Olá, {{ request.user.first_name }}!</h1>
+<body style="background-image: linear-gradient(to bottom, #1f2029, #292a48, #3a3166, #523683, #72369d);">
+<div style="display: flex; align-items: center;
+justify-content: center;
+min-height: 100vh;
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;">
 
 <div class="container-sm text-3xl">
-    <h2> Detalhes do Usuario </h2>
-    <hr> 
-    <br>
-    <p>{{request.user.first_name}} {{request.user.last_name}}</p>
-    <p> Email: {{request.user.email}}</p>
+  
+    <h1> Detalhes do Usuario </h1>
+    <hr><br>
+    <div style="color: white;">
     <p> Username: {{request.user.username}}</p>
-  <br>
-    <a class="text-blue-700" href="{% url 'alterar_senha' %}" class="ml-2"><p class="text-2xl"> Alterar senha </p> </a>
-    <a class="text-blue-700" href="{% url 'deslogar_usuario' %}" class="ml-2"><p class="text-2xl"> Logout </p> </a>
-    
-  </div>
+    <p> Nome: {{request.user.first_name}} {{request.user.last_name}}</p>
+    <p> Email: {{request.user.email}}</p>
+    </div>
 
+  <br>
+  <a  href="{% url 'alterar_senha' %}" class="btn btn-primary" >Alterar senha</a>
+  <a  href="{% url 'deslogar_usuario' %}" class="btn btn-primary">Logout</a>
+</div>
+</body>
 {% endblock content %}

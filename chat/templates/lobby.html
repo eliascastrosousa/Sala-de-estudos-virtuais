@@ -2,27 +2,35 @@
 {% load static %}
 
 {% block content %}
+<body style="background-image: linear-gradient(to bottom, #1f2029, #292a48, #3a3166, #523683, #72369d);">
+  <h1 class="mb-5 font-bold text-3xl" style="display: flex; justify-content: center;">Olá, {{ request.user.first_name }}!</h1><hr>
 
-<h1 class="mb-5 font-bold text-3xl ">Olá, {{ request.user.first_name }}!</h1>
-
-<div class="container-sm text-3xl">
-  <h2> Lobby </h2>
-  <hr>
-  <br>
-  <div class="row">
-    <div class="input-group mb-3">
-      {% for room in rooms %}
-      <div class="card" style="width: 18rem; margin: 1%;">
-        <img src="/static/img/coruja.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">{{ room.name }}</h5>
-          <p class="card-text">{{ room.description }}</p> <br>
-          <a href="{% url 'chat' room.id %}" class="btn btn-primary">Entrar</a>
+  <div style="display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;">
+    
+    <div class="container-sm text-3xl">
+    <br><h1 class="mb-5 font-bold text-3xl ">Lobby</h1>
+    <br>
+      <br>
+      <div class="row">
+        <div class="input-group mb-3">
+          {% for room in rooms %}
+          <div class="card" style="width: 18rem; margin: 1%;">
+            <img src="/static/img/coruja.png" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{ room.name }}</h5>
+              <p class="card-text">{{ room.description }}</p> <br>
+              <a href="{% url 'chat' room.id %}" class="btn btn-primary">Entrar</a>
+            </div>
+          </div>
+          {% endfor %}
         </div>
       </div>
-      {% endfor %}
     </div>
-  </div>
-</div>
-
+    </div>
+</body>
 {% endblock content %}

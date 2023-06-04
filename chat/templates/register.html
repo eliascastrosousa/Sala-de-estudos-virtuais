@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/registercss.css"/>
+
+<body style="background-image: linear-gradient(to bottom, #1f2029, #292a48, #3a3166, #523683, #72369d);">
+    <div class="p-3 container-sm text-3xl">
+        <h1 class="mb-5 font-bold text-3xl ">Seja bem vindo(a)!</h1>
+        <section>
+            
+            <form class="form-register" method="POST">
+                {% csrf_token %}
+                
+                <img src="/static/img/coruja.png" width="72" height="72">
+                <h1>Sign up</h1>
+                
+                <div class="inputbox">
+                    <input type="text" name="username" placeholder="Username" class="form-control" required autofocus>
+                    <label for="text" class="sr-only p-1">Username</label>
+                </div>
+                <div class="inputbox">
+                    <input type="email" name="email" placeholder="Email" class="form-control" required autofocus>
+                    <label for="email" class="sr-only p-1">Email</label>
+                </div>
+                <div class="inputbox">
+                    <input type="password" name="password1" placeholder="Password" class="form-control" required>
+                    <label for="inputPassword" class="sr-only p-1">Password</label>
+                </div>
+                <div class="inputbox">
+                    <input type="password" name="password2" placeholder="Confirm Password" class="form-control" required>
+                    <label for="inputPassword" class="sr-only p-1">Confirm Password</label>
+                </div>
+                {% for message in messages %}
+                <p id="messages">{{ message }}</p>
+                {% endfor %}
+
+                {{ form.errors }}
+
+                <button type="submit" value="Login">Sign in</button>
+                <div class="register">
+                    <p>Já tem uma conta?<a href="{% url 'login' %}"> Login</a></p>
+                    
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+
+{% endblock content %}
+
+

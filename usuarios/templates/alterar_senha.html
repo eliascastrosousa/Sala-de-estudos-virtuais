@@ -3,51 +3,62 @@
 
 {% block content %}
 
-    <div class="container mb-3">
-      <form method="post">
-        {% csrf_token %}
-    
-              {{form_senha.old_password.errors}}
-              <div class="mb-3">
-                <div class="col-auto">
-                  <label for="inputPassword6" class="col-form-label">Senha antiga</label>
-                </div>
-                <div class="col-auto">
-                  {{form_senha.old_password}}
-                </div>
+<link rel="stylesheet" type="text/css" href="/static/css/registercss.css"/>
+<body style="background-image: linear-gradient(to bottom, #1f2029, #292a48, #3a3166, #523683, #72369d);">    
+<div class="p-3 container-sm text-3xl"  >
+  <section>
+
+    <form method="post">
+      {% csrf_token %}
+      {{form_senha.old_password.errors}}
+        <img src="/static/img/coruja.png" width="72" height="72">
+        <h1>Alteração de Senha</h1><br>
+              
+          <div class="mb-3">
+            <div class="col-auto">
+                <label for="inputPassword6" class="col-form-label">Senha antiga</label>
+            </div>
+            <div class="col-auto">
+                {{form_senha.old_password}}
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="col-auto">
+              {{form_senha.new_password1.errors}}
+                <label for="inputPassword6" class="col-form-label">Nova senha</label>
               </div>
-              <div class="mb-3">
-                <div class="col-auto">
-                  {{form_senha.new_password1.errors}}
-                  <label for="inputPassword6" class="col-form-label">Nova senha</label>
-                </div>
-                <div class="col-auto">
-                  {{form_senha.new_password1}}
-                </div>
+            <div class="col-auto">
+                {{form_senha.new_password1}}
               </div>
-              <div class="mb-3">
-                <div class="col-auto">
-                  {{form_senha.new_password2.errors}}
-                  <label for="inputPassword6" class="col-form-label">Confirmação de senha</label>
-                </div>
-                <div class="col-auto">
-                  {{form_senha.new_password2}}
-                </div>
-              </div>
-              <br>
-              <div>
-                  <button type="submit" class="btn btn-dark">Alterar </button>
-                  <button type="button" class="btn btn-danger"><a href="{% url 'perfil' %}">Voltar</a></button>
-              </div>
-              <br>
-        
+          </div>
+
+          <div class="mb-3">
+            <div class="col-auto">
+              {{form_senha.new_password2.errors}}
+              <label for="inputPassword6" class="col-form-label">Confirmação de senha</label>
+            </div>
+            <div class="col-auto">
+              {{form_senha.new_password2}}
+            </div>
+          </div>
+            
+          <br>
+          <div class="text-center">
+            <button type="submit" class="btn btn-dark" style="color: #72369d; background-color: #FFAD03; width:fit-content;">Alterar </button>
+            <a href="{% url 'perfil' %}" class="btn btn-danger" style="color: #72369d; background-color: #FFAD03;">Voltar</a>
+          </div>
+          <br>
       </form>
-  </div>
+  </section>
+</div>
 
         {% for message in messages %}
         <p id="messages">{{ message }}</p>
         {% endfor %}
 
         {{ form.errors }}
-    </div>
+
+</body>
+
 {% endblock content %}
