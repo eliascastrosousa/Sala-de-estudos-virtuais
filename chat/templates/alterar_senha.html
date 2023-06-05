@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-
+<link rel="stylesheet" type="text/css" href="/static/css/registercss.css"/>
     <div class="container mb-3">
       <form method="post">
         {% csrf_token %}
@@ -12,7 +12,7 @@
                 <div class="col-auto">
                   <label for="inputPassword6" class="col-form-label">Senha antiga</label>
                 </div>
-                <div class="col-auto">
+                <div class="col-auto"><br>
                   {{form_senha.old_password}}
                 </div>
               </div>
@@ -36,7 +36,7 @@
               </div>
               <br>
               <div>
-                  <button type="submit" class="btn btn-dark">Alterar </button>
+                  <button type="submit" class="btn btn-dark" style="width: 48%; background-color: #FFAD03; ">Alterar </button>
                   <button type="button" class="btn btn-danger"><a href="{% url 'perfil' %}">Voltar</a></button>
               </div>
               <br>

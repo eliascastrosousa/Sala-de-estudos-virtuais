@@ -106,7 +106,7 @@ button {
     font-weight: 600;
 }
 
-.register p a:hover {
+.register p a:hover{
     text-decoration: underline;
     color: #FFAD03;
 }
