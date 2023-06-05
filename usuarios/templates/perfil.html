@@ -10,9 +10,9 @@ background-repeat: no-repeat;
 background-position: center;
 background-size: cover;">
 
-<div class="container-sm text-3xl">
+<div class="container-sm " style="color: #72369d;">
   
-    <h1> Detalhes do Usuario </h1>
+    <h1 style="color: #FFAD03;"> Detalhes do Usuario </h1>
     <hr><br>
     <div style="color: white;">
     <p> Username: {{request.user.username}}</p>
@@ -21,8 +21,10 @@ background-size: cover;">
     </div>
 
   <br>
-  <a  href="{% url 'alterar_senha' %}" class="btn btn-primary" >Alterar senha</a>
-  <a  href="{% url 'deslogar_usuario' %}" class="btn btn-primary">Logout</a>
+  <button class="btn btn-primary" style="width: 48%; background-color: #FFAD03; "><a href="{% url 'alterar_senha' %}">Alterar senha</a></button>
+  <button class="btn btn-primary" style="width: 48%; background-color: #FFAD03; "><a href="{% url 'deslogar_usuario' %}">Logout</a> </button>
+
+</div>
 </div>
 </body>
 {% endblock content %}
