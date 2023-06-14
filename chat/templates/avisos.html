@@ -1,0 +1,20 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container text-center">
+    <ul>
+        {% for announcement in announcements %}
+        <li>Aviso: {{ announcement.title }}</li>
+        <li>Descrição: {{ announcement.description }}</li>
+        <li>Criado por: {{ announcement.created_by }}</li>
+        <li>Criado em: {{ announcement.title }}</li>
+        <br>
+        {% endfor %}
+    </ul>
+</div>
+
+<a href="{% url 'chat' room.id %}">Voltar</a>
+
+{% endblock content %}
