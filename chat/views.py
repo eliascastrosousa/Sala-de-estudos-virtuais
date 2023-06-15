@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -31,7 +31,7 @@ def chat(request, room_id):
     announcements = Announcement.objects.all()[:4]
     form = MessageForm()
     context = {
-        "room_name": room_id,
+        "room_id": room_id,
         "announcements": announcements,
         "form": form,
     }
@@ -43,12 +43,34 @@ def announcements_list(request, room_id):
     all_announcements = Announcement.objects.filter(room=room_id)
     context = {
         "announcements": all_announcements,
+        "room_id": room_id,
     }
     return render(request, "avisos.html", context)
 
 
 @login_required(login_url="/auth/login/")
-def criar_sala(request):
+def edit_announcement(request, room_id, announcement_id):
+    announcement = Announcement.objects.get(id=announcement_id)
+    if request.method == "POST":
+        title = request.POST.get("titulo", None)
+        description = request.POST.get("descricao", None)
+        announcement.title = title
+        announcement.description = description
+        announcement.save()
+        return redirect(reverse("avisos", args=[room_id]))
+    context = {
+        "announcement": announcement,
+    }
+    return render(request, "alterar_aviso.html", context)
+
+
+@login_required(login_url="/auth/login/")
+def delete_announcement(request, announcement_id):
+    ...
+
+
+@login_required(login_url="/auth/login/")
+def create_room(request):
     categories = CATEGORIES
     if request.method == "POST":
         name = request.POST.get("nome", None)
