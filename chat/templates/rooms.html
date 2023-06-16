@@ -3,70 +3,87 @@
 
 {% block content %}
 
-<h1 class="mb-5 font-bold text-3xl ">Ola, {{ request.user.username }}!</h1>
-<div class="container-sm text-3xl">
-    <h2> Salas virtuais disponiveis </h2>
-    <hr> 
+<body style="background-image: linear-gradient(to bottom, #1f2029, #292a48, #3a3166, #523683, #72369d);">
+    <div style="display: flex; align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;">
+
+
+
+
+<div class="container-sm text-3xl text-center m-10 ">
     <br>
 
-    <div class="container text-center">
+    <h1> Salas virtuais disponiveis </h1>
+    <br>
+
+    <div class="container ">
         <div class="row">
             <div class="col-3">
                 <div class="input-group mb-3">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Categorias</option>
+                    <select class="form-select" aria-label="Default select example" style="background-color:#523683; padding-bottom: 8px; border-radius: 5px;">
+                        <option selected disabled>Categorias</option>
                         <option value="1">Programação</option>
                         <option value="2">Desenvolvimento Front-end</option>
                         <option value="3">Desenvolvimento Back-end</option>
                         <option value="3">Segurança</option>
                         <option value="3">Banco de dados</option>
                     </select>
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Aplicar</button>
+                    <button class="btn btn-outline-secondary" id="button-addon2" style="width: 48%; background-color: #FFAD03; color: #72369d;">Aplicar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container text-center m-10">
+<!--aqui-->
+<div class="container text-center m-10 " >
 
 
-        <div class="row">
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img src="/static/img/coruja.png" class="card-img-top" alt="...">
+    <div class="row row-cols-md-2 "  style="display: flex; ">
+        <div class="col" style="padding-right: 20px;">
+            <div class="card" style="width: 18rem; background-color:#523683; border-radius: 5px;">
+                <img src="/static/img/coruja.png" class="card-img-top" alt="...">
 
-                    <div class="card-body">
-                        <h5 class="card-title">Laboratorio de Software</h5>
-                        <p class="card-text">Card Sala Exemplo </p> <br>
-                        <a href="#" class="btn btn-primary">Entrar</a>
-                    </div>
+                <div class="card-body" style="color: white;">
+                    <h5 class="card-title">Laboratorio de Software</h5>
+                    <p class="card-text">Card Sala Exemplo </p> <br>
+                    <a href="#" class="btn btn-primary">Entrar</a>
                 </div>
             </div>
-            <div class="col">
+        </div>
+        <div class="col" style="padding-right: 20px;">
 
-                <div class="card" style="width: 18rem;">
-                    <img src="/static/img/coruja.png" class="card-img-top" alt="...">
+            <div class="card" style="width: 18rem;  background-color:#523683; border-radius: 5px;">
+                <img src="/static/img/coruja.png" class="card-img-top" alt="...">
 
-                    <div class="card-body">
-                        <h5 class="card-title">Laboratorio de Software</h5>
-                        <p class="card-text">Card Sala Exemplo </p> <br>
-                        <a href="#" class="btn btn-primary">Entrar</a>
-                    </div>
+                <div class="card-body" style="color: white;">
+                    <h5 class="card-title">Laboratorio de Software</h5>
+                    <p class="card-text">Card Sala Exemplo </p> <br>
+                    <a href="#" class="btn btn-primary">Entrar</a>
                 </div>
             </div>
-            <div class="col">
+        </div>
+        <div class="col">
 
-                <div class="card" style="width: 18rem;">
-                    <img src="/static/img/coruja.png" class="card-img-top" alt="...">
+            <div class="card" style="width: 18rem;  background-color:#523683; border-radius: 5px;">
+                <img src="/static/img/coruja.png" class="card-img-top" alt="...">
 
-                    <div class="card-body">
-                        <h5 class="card-title">Laboratorio de Software</h5>
-                        <p class="card-text">Card Sala Exemplo </p> <br>
-                        <a href="#" class="btn btn-primary">Entrar</a>
-                    </div>
+                <div class="card-body" style="color: white;">
+                    <h5 class="card-title">Laboratorio de Software</h5>
+                    <p class="card-text">Card Sala Exemplo </p> <br>
+                    <a href="#" class="btn btn-primary">Entrar</a>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<!--aqui-->
+</div>
+    
+</body>
+
 
 {% endblock content %}

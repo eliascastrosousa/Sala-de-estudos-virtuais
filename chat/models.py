@@ -1,13 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 CATEGORIES = (
-    ('Programacao', 'Programação'),
-    ('Design', 'Design'),
-    ('Jogos_digitais', 'Jogos Digitais'),
-    ('Mobile', 'Mobile'),
+    ("Programacao", "Programação"),
+    ("Design", "Design"),
+    ("Jogos_digitais", "Jogos Digitais"),
+    ("Mobile", "Mobile"),
 )
+
 
 class Room(models.Model):
     name = models.CharField(max_length=100)
@@ -18,3 +20,14 @@ class Room(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Announcement(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=1000)
+    created_by = models.ForeignKey(User, on_delete=models.PROTECT)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
