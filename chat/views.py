@@ -28,7 +28,7 @@ def rooms(request):
 
 @login_required(login_url="/auth/login/")
 def chat(request, room_id):
-    announcements = Announcement.objects.all()[:4]
+    announcements = Announcement.objects.filter(room=room_id)[:4]
     form = MessageForm()
     context = {
         "room_id": room_id,
@@ -49,6 +49,19 @@ def announcements_list(request, room_id):
 
 
 @login_required(login_url="/auth/login/")
+def create_announcement(request, room_id):
+    room = Room.objects.get(id=room_id)
+    if request.method == "POST":
+        title = request.POST.get("titulo", None)
+        description = request.POST.get("descricao", None)
+        new_annoucement = Announcement(title=title, description=description, created_by=request.user, room=room)
+        new_annoucement.save()
+        return redirect(reverse("avisos", args=[room_id]))
+    context = {"room_id": room_id}
+    return render(request, "criar_aviso.html", context)
+
+
+@login_required(login_url="/auth/login/")
 def edit_announcement(request, room_id, announcement_id):
     announcement = Announcement.objects.get(id=announcement_id)
     if request.method == "POST":
@@ -59,14 +72,18 @@ def edit_announcement(request, room_id, announcement_id):
         announcement.save()
         return redirect(reverse("avisos", args=[room_id]))
     context = {
+        "room_id": room_id,
         "announcement": announcement,
     }
-    return render(request, "alterar_aviso.html", context)
+    return render(request, "editar_aviso.html", context)
 
 
 @login_required(login_url="/auth/login/")
-def delete_announcement(request, announcement_id):
-    ...
+def delete_announcement(request, room_id, announcement_id):
+    if request.method == "POST":
+        announcement = Announcement.objects.get(id=announcement_id)
+        announcement.delete()
+        return redirect(reverse("avisos", args=[room_id]))
 
 
 @login_required(login_url="/auth/login/")

@@ -8,12 +8,12 @@
         {% csrf_token %}
         <div class="mb-3">
             <label class="text-3xl" for="titulo">Titulo:</label>
-            <input type="text" name="titulo" id="titulo" required>
+            <input type="text" name="titulo" id="titulo" value="{{ announcement.title }}" required>
         </div>
 
         <div class="mb-3">
             <label for="descricao" class="text-3xl mb-2">Descrição:</label>
-            <input type="text" name="descricao" id="descricao" required>
+            <input type="text" name="descricao" id="descricao" value="{{ announcement.description }}" required>
         </div>
 
         <div class="mb-3">
