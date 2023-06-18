@@ -39,7 +39,7 @@ class Announcement(models.Model):
 class Roadmap(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000, null=True)
-    content = models.TextField()
+    content = RichTextUploadingField()
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
