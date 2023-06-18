@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "usuarios",
     "chat",
     "ckeditor",
+    "ckeditor_uploader",
     "channels",
 ]
 
