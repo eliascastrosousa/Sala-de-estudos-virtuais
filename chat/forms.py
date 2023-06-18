@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from ckeditor.widgets import CKEditorWidget
 
+from chat.models import Roadmap
+
 
 class CreateUserForm(UserCreationForm):
     class Meta:
@@ -23,3 +25,10 @@ class MessageForm(forms.Form):
             }
         )
     )
+
+
+class RoadmapForm(forms.ModelForm):
+    class Meta:
+        model = Roadmap
+        fields = ["title", "description", "content"]
+        widgets = {"content": CKEditorWidget()}
