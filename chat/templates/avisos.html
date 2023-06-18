@@ -16,8 +16,7 @@
         <li>Criado em: {{ announcement.title }}</li>
         {% if request.user.is_superuser %}
         <a href="{% url 'editar_aviso' room_id announcement.id %}">Editar</a>
-        <a data-bs-toggle="modal" data-bs-target="#exampleModal{{announcement.id}}"
-            href="{% url 'deletar_aviso' room_id announcement.id %}">Deletar</a>
+        <li type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{announcement.id}}">Deletar</li>
         <hr>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal{{announcement.id}}" tabindex="-1" role="dialog"

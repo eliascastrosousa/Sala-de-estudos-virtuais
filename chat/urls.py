@@ -15,7 +15,6 @@ from .views import (
     edit_roadmap,
     delete_roadmap,
     create_document,
-    edit_document,
     delete_document,
 )
 
@@ -39,8 +38,5 @@ urlpatterns = [
     path("deletar_roadmap/<str:room_id>/<str:roadmap_id>/", delete_roadmap, name="deletar_roadmap"),
     # Documento
     path("criar_documento/<str:room_id>/<str:roadmap_id>/", create_document, name="criar_documento"),
-    path("editar_documento/<str:room_id>/<str:roadmap_id>/<str:document_id>/", edit_document, name="editar_documento"),
-    path(
-        "deletar_documento/<str:room_id>/<str:roadmap_id>/<str:document_id>/", delete_document, name="deletar_documento"
-    ),
+    path("deletar_documento/<str:room_id>/<str:document_id>/", delete_document, name="deletar_documento"),
 ]
