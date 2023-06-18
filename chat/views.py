@@ -3,8 +3,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
-from chat.forms import MessageForm
-from .models import Announcement, Room, CATEGORIES
+from chat.forms import MessageForm, RoadmapForm
+from .models import Announcement, Room, CATEGORIES, Roadmap, Document
 from django.contrib.auth.models import User
 from .utils import unauthenticated_user
 
@@ -29,10 +29,12 @@ def rooms(request):
 @login_required(login_url="/auth/login/")
 def chat(request, room_id):
     announcements = Announcement.objects.filter(room=room_id)[:4]
+    roadmaps = Roadmap.objects.filter(room=room_id)[:4]
     form = MessageForm()
     context = {
         "room_id": room_id,
         "announcements": announcements,
+        "roadmaps": roadmaps,
         "form": form,
     }
     return render(request, "chat.html", context)
@@ -82,6 +84,8 @@ def edit_announcement(request, room_id, announcement_id):
 def delete_announcement(request, room_id, announcement_id):
     if request.method == "POST":
         announcement = Announcement.objects.get(id=announcement_id)
+        print(announcement)
+        print(room_id)
         announcement.delete()
         return redirect(reverse("avisos", args=[room_id]))
 
@@ -99,3 +103,87 @@ def create_room(request):
         return redirect("/")
     context = {"categories": categories}
     return render(request, "criar_sala.html", context)
+
+
+@login_required(login_url="/auth/login/")
+def roadmap(request, room_id, roadmap_id):
+    roadmap = Roadmap.objects.get(id=roadmap_id)
+    context = {
+        "room_id": room_id,
+        "roadmap": roadmap,
+    }
+    return render(request, "roadmap.html", context)
+
+
+@login_required(login_url="/auth/login/")
+def all_roadmaps(request, room_id):
+    roadmaps = Roadmap.objects.filter(room=room_id).order_by("-created")
+    context = {
+        "room_id": room_id,
+        "roadmaps": roadmaps,
+    }
+    return render(request, "roadmaps.html", context)
+
+
+@login_required(login_url="/auth/login/")
+def create_roadmap(request, room_id):
+    room = Room.objects.get(id=room_id)
+    if request.method == "POST":
+        form = RoadmapForm(request.POST)
+        if form.is_valid():
+            my_form_data = form.save(commit=False)  # Get the form data without saving to the database yet
+            my_form_data.created_by = request.user  # Assign the currently logged-in user to the created_by field
+            my_form_data.room = room
+            my_form_data.save()
+            return redirect(reverse("roadmaps", args=[room_id]))
+    else:
+        form = RoadmapForm()
+    context = {
+        "room_id": room_id,
+        "form": form,
+    }
+    return render(request, "criar_roadmap.html", context)
+
+
+@login_required(login_url="/auth/login/")
+def edit_roadmap(request, room_id, roadmap_id):
+    room = Room.objects.get(id=room_id)
+    roadmap = Roadmap.objects.get(id=roadmap_id)
+    if request.method == "POST":
+        form = RoadmapForm(request.POST, instance=roadmap)
+        if form.is_valid():
+            my_form_data = form.save(commit=False)
+            my_form_data.created_by = request.user
+            my_form_data.room = room
+            my_form_data.save()
+            return redirect(reverse("roadmaps", args=[room_id]))
+    else:
+        form = RoadmapForm(instance=roadmap)
+    context = {
+        "room_id": room_id,
+        "roadmap": roadmap,
+        "form": form,
+    }
+    return render(request, "editar_roadmap.html", context)
+
+
+@login_required(login_url="/auth/login/")
+def delete_roadmap(request, room_id, roadmap_id):
+    roadmap = Roadmap.objects.get(id=roadmap_id)
+    roadmap.delete()
+    return redirect(reverse("roadmaps", args=[room_id]))
+
+
+@login_required(login_url="/auth/login/")
+def create_document(request):
+    ...
+
+
+@login_required(login_url="/auth/login/")
+def edit_document(request):
+    ...
+
+
+@login_required(login_url="/auth/login/")
+def delete_document(request):
+    ...

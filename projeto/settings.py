@@ -32,16 +32,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'usuarios',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "usuarios",
     "chat",
     "ckeditor",
-    "channels"
+    "channels",
 ]
 
 ASGI_APPLICATION = "projeto.asgi.application"
@@ -128,9 +128,9 @@ STATIC_URL = "static/"
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "static/images")
+MEDIA_URL = "media/"
 
-MEDIA_URL = "/images/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -144,3 +144,5 @@ CKEDITOR_CONFIGS = {
         # Other CKEditor configuration options...
     }
 }
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
