@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if request.user.is_superuser %}
+<a href="{% url ''  %}">Criar</a>
+{% endif %}
+
+<div class="container">
+
+</div>
+
+<a href="{% url ''  %}">Voltar</a>
+
+{% endblock content %}

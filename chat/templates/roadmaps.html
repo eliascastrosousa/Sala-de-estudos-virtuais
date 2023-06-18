@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if request.user.is_superuser %}
+<a href="{% url 'criar_roadmap' room_id  %}">Criar</a>
+{% endif %}
+
+<div class="container">
+    <ul>
+        <li>Últimas atualizações</li>
+        {% if roadmaps %}
+        {% for roadmap in roadmaps %}
+        <a href="{% url 'roadmap' room_id roadmap.id  %}">Título: {{ roadmap.title }}</a>
+        {% if roadmap.document_set.exists %}
+        <ul>
+            {% for document in roadmap.document_set.all %}
+            <li>{{ document.title }}</li>
+            <!-- Display other document attributes as needed -->
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Nenhum documento disponível para este guia</p>
+        {% endif %}
+        {% endfor %}
+        {% else %}
+        <p>Sem guias de estudo disponíveis</p>
+        {% endif %}
+        <hr>
+    </ul>
+</div>
+
+<a href="{% url 'chat' room_id  %}">Voltar</a>
+
+{% endblock content %}
