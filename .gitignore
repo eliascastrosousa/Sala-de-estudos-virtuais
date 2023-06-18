@@ -90,3 +90,7 @@ local_settings.py
 .env
 db.sqlite3
 salas-virtuais/db.sqlite3
+
+# Random stuff
+media
+.mypy_cache

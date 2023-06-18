@@ -66,7 +66,7 @@
     {% if roadmap.document_set.exists %}
     <ul>
       {% for document in roadmap.document_set.all %}
-      <li>{{ document.title }}</li>
+      <li><a href="{{ document.file.url }}" download>{{ document.title }}</a></li>
       <!-- Display other document attributes as needed -->
       {% endfor %}
     </ul>

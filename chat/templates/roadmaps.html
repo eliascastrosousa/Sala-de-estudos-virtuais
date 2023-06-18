@@ -16,12 +16,43 @@
         {% if roadmap.document_set.exists %}
         <ul>
             {% for document in roadmap.document_set.all %}
-            <li>{{ document.title }}</li>
+            <li><a href="{{ document.file.url }}" download>{{ document.title }}</a></li>
+            {% if request.user.is_superuser %}
+            <a href="{% url 'deletar_documento' room_id document.id %}">Excluir documento</a>
+            {% endif %}
             <!-- Display other document attributes as needed -->
             {% endfor %}
         </ul>
         {% else %}
         <p>Nenhum documento disponível para este guia</p>
+        {% endif %}
+        {% if request.user.is_superuser %}
+        <li type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{roadmap.id}}">Adicionar documento</li>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal{{roadmap.id}}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Adicionar documento a {{ roadmap.title }}</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'criar_documento' room_id roadmap.id %}" method="post"
+                            enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <input type="submit" value="Salvar">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% endif %}
         {% endfor %}
         {% else %}
