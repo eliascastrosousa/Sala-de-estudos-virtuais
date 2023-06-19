@@ -1,19 +1,23 @@
-<!DOCTYPE html>
-<html>
+{% extends 'main.html' %}
+{% load static %}
+{% block 'title' %}Criar Roadmap{% endblock %}
+{% block content %}
 
-<head>
-    <title>Create Form</title>
+
+<div class="container mt-5">
+    <img src="/static/img/coruja.png" width="72" height="72"> 
+    <h1>Criar RoadMap</h1>
+    <hr>
     {{ form.media }}
-</head>
 
-<body>
-    <h1>Create Form</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a href="{% url 'roadmaps' room_id  %}"><input type="button" class="btn btn-secondary" value="Voltar"></a>
     </form>
-    <a href="{% url 'roadmaps' room_id  %}">Voltar</a>
-</body>
 
-</html>
+
+    {% endblock content %}
+
+

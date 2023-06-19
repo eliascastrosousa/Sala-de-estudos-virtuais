@@ -17,7 +17,7 @@
 
 
         {% for announcement in announcements %}
-        <div class="card" style="width: 18rem; background-color: #14213d; color: white;">
+        <div class="card p-2 m-2" style="width: 18rem; background-color: #14213d; color: white;">
             <div class="card-body">
                 <h5 class="card-title"> {{ announcement.title }}</h5>
                 <h6 class="card-subtitle mb-2">Por: {{ announcement.created_by }}</h6>
@@ -59,6 +59,7 @@
                         </div>
                     </div>
                 </div>
+
             {% endif %}
         {% endfor %}
 
