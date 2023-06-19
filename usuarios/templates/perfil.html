@@ -1,30 +1,25 @@
 {% extends 'main.html' %}
 {% load static %}
-
+{% block 'title' %}Perfil{% endblock %}
 {% block content %}
-<body style="background-image: linear-gradient(to bottom, #1f2029, #292a48, #3a3166, #523683, #72369d);">
-<div style="display: flex; align-items: center;
-justify-content: center;
-min-height: 100vh;
-background-repeat: no-repeat;
-background-position: center;
-background-size: cover;">
 
-<div class="container-sm " style="color: #72369d;">
-  
-    <h1 style="color: #FFAD03;"> Detalhes do Usuario </h1>
-    <hr><br>
-    <div style="color: white;">
-    <p> Username: {{request.user.username}}</p>
-    <p> Nome: {{request.user.first_name}} {{request.user.last_name}}</p>
-    <p> Email: {{request.user.email}}</p>
-    </div>
+<div class="container mt-5">
+  <img src="/static/img/coruja.png" width="72" height="72">
+
+
+  <h1>Perfil</h1>
+  <hr>
+
+  <div style="color: white;">
+    <h4> Username: {{request.user.username}}</h4>
+    <h4> Nome: {{request.user.first_name}} {{request.user.last_name}}</h4>
+    <h4> Email: {{request.user.email}}</h4>
+  </div>
 
   <br>
-  <button class="btn btn-primary" style="width: 48%; background-color: #FFAD03; "><a href="{% url 'alterar_senha' %}">Alterar senha</a></button>
-  <button class="btn btn-primary" style="width: 48%; background-color: #FFAD03; "><a href="{% url 'deslogar_usuario' %}">Logout</a> </button>
+  <a href="{% url 'alterar_senha' %}"><input type="button" class="btn btn-info" value="Alterar Senha"></a>
+  <a href="{% url 'deslogar_usuario' %}"><input type="button" class="btn btn-danger" value="Sair"></a>
 
 </div>
-</div>
-</body>
+
 {% endblock content %}

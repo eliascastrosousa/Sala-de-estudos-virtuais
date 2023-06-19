@@ -37,7 +37,7 @@ def chat(request, room_id):
         "roadmaps": roadmaps,
         "form": form,
     }
-    return render(request, "chat.html", context)
+    return render(request, "chat.html", context )
 
 
 @login_required(login_url="/auth/login/")

@@ -3,27 +3,28 @@
 
 {% block content %}
 
-{{ roadmap.title }}
-<hr>
-<a href="{% url 'editar_roadmap' room_id roadmap.id %}">Editar</a>
-<button data-bs-toggle="modal" data-bs-target="#exampleModal">Deletar</button>
-<hr>
-<hr>
-{{ roadmap.description }}
-<hr>
-{{ roadmap.content | safe | urlize | linebreaks }}
-<hr>
-criado por {{ roadmap.created_by }}
-<hr>
-criado em {{ roadmap.created }}
-<hr>
-ultima atualização: {{ roadmap.updated }}
-<hr>
 
-<a href="{% url 'roadmaps' room_id  %}">Voltar</a>
+<div class="container mt-5">
+    <img src="/static/img/coruja.png" width="72" height="72">
+    <h1>{{ roadmap.title }}</h1>
+    <hr>
+
+    <div style="color: white;">
+        <h4> Titulo: {{ roadmap.title }}</h4>
+        <h4> Descrição: {{ roadmap.description }}</h4>
+        <h4>{{ roadmap.content | safe | urlize | linebreaks }}</h4>
+        <h4>Criado por {{ roadmap.created_by }}</h4>
+        <h4>Última atualização: {{ roadmap.updated }}</h4>
+      </div>
+    
+      <br>
+      <a href="{% url 'editar_roadmap' room_id roadmap.id %}"><input type="button" class="btn btn-info" value="Editar"></a>
+      <button class="btn btn-danger" type="button" id="button-addon2" data-bs-toggle="modal" data-bs-target="#exampleModal">Deletar</button>
+      <a href="{% url 'roadmaps' room_id  %}"><input type="button" class="btn btn-secondary" value="Voltar"></a>
+    <br>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade text-black" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth import authenticate, login as login_django, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from .utils import check_if_superuser, unauthenticated_user
@@ -60,7 +60,7 @@ def enviar_email(first_name, emailusuario, codigo):
     print('Email enviado')
 
 @unauthenticated_user
-def register_page(request):
+def register(request):
     if request.method == "POST":
         
         first_name = request.POST.get('first_name')
@@ -156,22 +156,21 @@ def register2(request):
     return render(request, 'register2.html')
 
 @unauthenticated_user
-def login_page(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        print(user)
-        if user is not None:
-            print('sim')
-            login(request, user)
-            return redirect('lobby')
-
+def login(request):
+        if request.method == "GET":
+            return render(request, 'login.html')
         else:
-            messages.info(request, 'Username ou senha incorretos')
+            username = request.POST.get('username')
+            password = request.POST.get('password')
 
-    return render(request, 'login.html')
+            user = authenticate(username=username, password=password)
 
+            if user:
+                login_django(request, user)
+                return redirect('lobby')
+            else:
+                return render(request, 'login.html', {'error': 'Username ou senha invalidos.'})
+        
 @login_required(login_url="/auth/login/")
 def perfil(request):
     return render(request, 'perfil.html')
