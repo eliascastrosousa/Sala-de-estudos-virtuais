@@ -1,40 +1,48 @@
 {% extends 'main.html' %}
 {% load static %}
+{% block 'title' %}Criar nova Sala{% endblock %}
 
 {% block content %}
 
-<h1 class="mb-5 font-bold text-3xl ">Olá, {{ user.first_name }}!</h1>
+<div class="container mt-5">
+    <img src="/static/img/coruja.png" width="72" height="72">
 
-<div class="container-sm text-3xl">
-    <h2> Criar Sala </h2>
+
+    <h1>
+        Criar Sala Virtual
+    </h1>
     <hr>
     <br>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="mb-3">
-            <label class="text-3xl" for="nome">Nome:</label>
-            <input type="text" name="nome" id="nome" required>
+        <div class="col-sm-6 col-sm-6 mb-3">
+            <label class="form-label mb-2">Username</label>
+            <input type="text" class="form-control" name="username" value="{{request.user.username}}">
         </div>
 
-        <div class="mb-3">
-            <label for="nome" class="text-3xl mb-2">Descrição:</label>
-            <input type="text" name="descricao" id="descricao" required>
+        <div class="col-sm-6 mb-3">
+            <label class="form-label mb-2">Nome:</label>
+            <input type="text" class="form-control" name="nome" id="nome" required>
         </div>
 
-        <div class="mb-3">
-            <label for="nome" class="text-3xl mb-2">Categoria:</label>
-            <select name="categoria" id="categoria" required>
+        <div class="col-sm-6 mb-3">
+            <label class="form-label mb-2">Descrição:</label>
+            <input type="text" class="form-control" name="descricao" id="descricao" required>
+        </div>
 
-                <option selected disabled></option>
+        <div class="col-sm-6 mb-3">
+            <label class="form-label mb-2">Categoria:</label>
+            <select name="categoria" id="categoria" class="form-control" required>
+                <option selected disabled>Selecione Aqui</option>
                 {% for category in categories %}
                 <option value="{{ category.name }}">{{ category.name }}</option>
                 {% endfor %}
             </select>
         </div>
 
-        <div class="mb-3">
-            <label for="nome" class="text-3xl mb-2" id="limite">Limite:</label>
-            <input type="number" name="limite" id="limite" value="1" min="1" max="99" required>
+        <div class="col-sm-6 mb-3">
+            <label class="form-label mb-2">Limite:</label>
+            <input type="number" class="form-control" name="limite" value="1" min="1" max="99" required>
         </div>
 
         <div class="mb-3">

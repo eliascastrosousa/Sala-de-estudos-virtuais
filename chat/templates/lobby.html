@@ -1,61 +1,52 @@
 {% extends 'main.html' %}
 {% load static %}
-
+{% block 'title' %}Lobby{% endblock %}
 {% block content %}
 
-<body style="background-image: linear-gradient(to bottom, #1f2029, #292a48, #3a3166, #523683, #72369d);">
-  <br>
-  <h1 class="mb-5 font-bold text-3xl" style="display: flex; justify-content: center;">Olá, {{request.user.first_name}}!
-  </h1>
+<div class="container mt-5">
+  <h1>Lobby</h1>
   <hr>
 
-  <div style="display: flex;
-    justify-content: center;
-    min-height: 100vh;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;">
-
-    <div class="container-sm text-3xl">
-      <br>
-      <h1 class="mb-5 font-bold text-3xl " style="color: #FFAD03;">Lobby</h1>
-      <br>
-      <br>
-      <div class="row">
-        <form method="get" action="{{ url }}">
-          {{ room_filter.form.as_p }}
-          <button type="submit">Filter</button>
-        </form>
-      </div>
-      <div class="row">
-        <div class="input-group mb-3">
-          {% for room in room_filter.qs %}
-          <div class="card" style="width: 18rem; margin: 1%;">
-            {% if room.image %}
-            <img src="{{ room.image.url }}" class="card-img-top" alt="...">
-            {% else %}
-            <img src="/static/img/coruja.png" class="card-img-top" alt="...">
-            {% endif %}
-            <div class="card-body">
-              <h5 class="card-title">{{ room.name }}</h5>
-              <p class="card-text">{{ room.description }}</p> <br>
-              <span>{{ room.members.count }} / {{ room.max_participants }}</span>
-              {% if room.members.count < room.max_participants %} <a href="{% url 'chat' room.id %}"
-                class="btn btn-primary">Entrar</a>
-                {% else %}
-                <button class="btn btn-secondary">Entrar</button>
-                {% endif %}
-            </div>
+  <div class="container-sm text-3xl">
+    <br>
+    <h1 class="mb-5 font-bold text-3xl " style="color: #FFAD03;">Lobby</h1>
+    <br>
+    <br>
+    <div class="row">
+      <form method="get" action="{{ url }}">
+        {{ room_filter.form.as_p }}
+        <button type="submit">Filter</button>
+      </form>
+    </div>
+    <div class="row">
+      <div class="input-group mb-3">
+        {% for room in room_filter.qs %}
+        <div class="card" style="width: 18rem; margin: 1%;">
+          {% if room.image %}
+          <img src="{{ room.image.url }}" class="card-img-top" alt="...">
+          {% else %}
+          <img src="/static/img/coruja.png" class="card-img-top" alt="...">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ room.name }}</h5>
+            <p class="card-text">{{ room.description }}</p> <br>
+            <span>{{ room.members.count }} / {{ room.max_participants }}</span>
+            {% if room.members.count < room.max_participants %} <a href="{% url 'chat' room.id %}"
+              class="btn btn-primary">Entrar</a>
+              {% else %}
+              <button class="btn btn-secondary">Entrar</button>
+              {% endif %}
           </div>
-          {% endfor %}
         </div>
-      </div>
-      <div class="row">
-        {% for message in messages %}
-        <div>{{ message }}</div>
         {% endfor %}
       </div>
     </div>
+    <div class="row">
+      {% for message in messages %}
+      <div>{{ message }}</div>
+      {% endfor %}
+    </div>
   </div>
-</body>
+</div>
+
 {% endblock content %}

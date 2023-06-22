@@ -17,7 +17,6 @@ def landing(request):
 
 @login_required(login_url="/auth/login/")
 def lobby(request):
-    # rooms = Room.objects.exclude(members=request.user)
     room_filter = RoomFilter(request.GET, queryset=Room.objects.all())
     context = {
         "rooms": rooms,
@@ -38,7 +37,6 @@ def rooms(request):
 
 @login_required(login_url="/auth/login/")
 def chat(request, room_id):
-    print(room_id)
     if not check_if_user_can_join(request.user, room_id):
         messages.error(request, "A sala já atingiu seu limite máximo")
         return render(request, "lobby.html")
