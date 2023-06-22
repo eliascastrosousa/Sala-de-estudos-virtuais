@@ -38,6 +38,8 @@
                 <option value="{{ category.name }}">{{ category.name }}</option>
                 {% endfor %}
             </select>
+             <a href="{% url 'adicionarcategoria' %}"> <label class="form-label mb-2">Cadastrar Categoria</label></a>
+
         </div>
 
         <div class="col-sm-6 mb-3">
@@ -51,8 +53,8 @@
         </div>
 
         <div class="mb-3">
-            <button type="button" class="btn btn-success"><input type="submit" value="Criar"></button>
-            <button type="button" class="btn btn-danger"><a href="{% url 'lobby' %}">Voltar</a></button>
+            <button type="submit" class="btn btn-success">Criar</button>
+            <a href="{% url 'lobby'  %}"><input type="button" class="btn btn-secondary" value="Voltar"></a>
         </div>
     </form>
 

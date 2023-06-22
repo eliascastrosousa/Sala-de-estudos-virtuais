@@ -4,18 +4,22 @@
 {% block content %}
 
 <div class="container mt-5">
-  <h1>Lobby</h1>
+  <img src="/static/img/coruja.png" width="72" height="72">
+
+
+  <h1>Lobby </h1>
   <hr>
 
   <div class="container-sm text-3xl">
-    <br>
-    <h1 class="mb-5 font-bold text-3xl " style="color: #FFAD03;">Lobby</h1>
-    <br>
+  
     <br>
     <div class="row">
       <form method="get" action="{{ url }}">
-        {{ room_filter.form.as_p }}
-        <button type="submit">Filter</button>
+        <label class="form-label mb-2">Filtrar por:</label>
+        {{ room_filter.form }}
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+        <a href="{% url 'lobby'  %}"><input type="button" class="btn btn-secondary" value="Limpar"></a>
+
       </form>
     </div>
     <div class="row">
@@ -31,10 +35,14 @@
             <h5 class="card-title">{{ room.name }}</h5>
             <p class="card-text">{{ room.description }}</p> <br>
             <span>{{ room.members.count }} / {{ room.max_participants }}</span>
-            {% if room.members.count < room.max_participants %} <a href="{% url 'chat' room.id %}"
-              class="btn btn-primary">Entrar</a>
+            {% if room.members.count < room.max_participants %} 
+              <a href="{% url 'chat' room.id %}" class="btn btn-primary">Entrar</a>
+              {% if request.user.is_superuser  %}
+                <a href="#"><input type="button" class="btn btn-warning" value="Editar"></a>
+              {% endif %}
               {% else %}
               <button class="btn btn-secondary">Entrar</button>
+
               {% endif %}
           </div>
         </div>

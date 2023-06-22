@@ -1,7 +1,7 @@
 body{
-    /* background-image: url(https://user-images.githubusercontent.com/13468728/233847739-219cb494-c265-4554-820a-bd3424c59065.jpg); */
-    background-color: #240046;
+    background-image: linear-gradient(to bottom, #1f2029, #292a48, #3a3166, #523683, #72369d);
     color: #FFAD03;
+    min-height: 100vh;
 }
 
 nav{

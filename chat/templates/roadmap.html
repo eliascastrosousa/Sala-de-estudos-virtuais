@@ -9,12 +9,15 @@
     <h1>{{ roadmap.title }}</h1>
     <hr>
 
-    <div style="color: white;">
+    <div class="col-6" style="color: white; background-color: #023047;">
         <h4> Titulo: {{ roadmap.title }}</h4>
         <h4> Descrição: {{ roadmap.description }}</h4>
+        <hr>
         <h4>{{ roadmap.content | safe | urlize | linebreaks }}</h4>
-        <h4>Criado por {{ roadmap.created_by }}</h4>
-        <h4>Última atualização: {{ roadmap.updated }}</h4>
+        <hr>
+        <br>
+        <h5>Criado por {{ roadmap.created_by }}</h5>
+        <h5>Última atualização: {{ roadmap.updated }}</h5>
       </div>
     
       <br>
