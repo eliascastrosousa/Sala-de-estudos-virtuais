@@ -4,19 +4,21 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 
-CATEGORIES = (
-    ("Programacao", "Programação"),
-    ("Design", "Design"),
-    ("Jogos_digitais", "Jogos Digitais"),
-    ("Mobile", "Mobile"),
-)
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 
 class Room(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=255)
-    category = models.CharField(choices=CATEGORIES, max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    members = models.ManyToManyField(User, related_name="rooms")
     max_participants = models.IntegerField(default=50)
+    image = models.ImageField(upload_to="static/img")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -39,7 +41,7 @@ class Announcement(models.Model):
 class Roadmap(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000, null=True)
-    content = models.TextField()
+    content = RichTextUploadingField()
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)

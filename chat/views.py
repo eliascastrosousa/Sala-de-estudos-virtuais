@@ -4,9 +4,10 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from chat.forms import DocumentForm, MessageForm, RoadmapForm
-from .models import Announcement, Room, CATEGORIES, Roadmap, Document
+from .models import Announcement, Room, Category, Roadmap, Document
+from .filters import RoomFilter
 from django.contrib.auth.models import User
-from .utils import unauthenticated_user
+from .utils import check_if_user_can_join, unauthenticated_user
 
 
 @unauthenticated_user
@@ -16,28 +17,40 @@ def landing(request):
 
 @login_required(login_url="/auth/login/")
 def lobby(request):
-    rooms = Room.objects.all()
-    context = {"rooms": rooms}
+    room_filter = RoomFilter(request.GET, queryset=Room.objects.all())
+    context = {
+        "rooms": rooms,
+        "room_filter": room_filter,
+    }
     return render(request, "lobby.html", context)
 
 
 @login_required(login_url="/auth/login/")
 def rooms(request):
-    return render(request, "rooms.html")
+    user = request.user
+    user_rooms = Room.objects.filter(members__in=[user])
+    context = {
+        "user_rooms": user_rooms,
+    }
+    return render(request, "rooms.html", context)
 
 
 @login_required(login_url="/auth/login/")
 def chat(request, room_id):
-    announcements = Announcement.objects.filter(room=room_id)[:4]
-    roadmaps = Roadmap.objects.filter(room=room_id)[:4]
-    form = MessageForm()
-    context = {
-        "room_id": room_id,
-        "announcements": announcements,
-        "roadmaps": roadmaps,
-        "form": form,
-    }
-    return render(request, "chat.html", context )
+    if not check_if_user_can_join(request.user, room_id):
+        messages.error(request, "A sala já atingiu seu limite máximo")
+        return render(request, "lobby.html")
+    else:
+        announcements = Announcement.objects.filter(room=room_id)[:4]
+        roadmaps = Roadmap.objects.filter(room=room_id)[:4]
+        form = MessageForm()
+        context = {
+            "room_id": room_id,
+            "announcements": announcements,
+            "roadmaps": roadmaps,
+            "form": form,
+        }
+        return render(request, "chat.html", context)
 
 
 @login_required(login_url="/auth/login/")
@@ -92,13 +105,17 @@ def delete_announcement(request, room_id, announcement_id):
 
 @login_required(login_url="/auth/login/")
 def create_room(request):
-    categories = CATEGORIES
+    categories = Category.objects.all()
     if request.method == "POST":
         name = request.POST.get("nome", None)
         description = request.POST.get("descricao", None)
-        category = request.POST.get("categoria", None)
+        category_input = request.POST.get("categoria", None)
+        category = Category.objects.get(name=category_input)
         max_participants = request.POST.get("limite", None)
-        new_room = Room(name=name, description=description, category=category, max_participants=max_participants)
+        image = request.FILES.get("imagem")
+        new_room = Room(
+            name=name, description=description, category=category, max_participants=max_participants, image=image
+        )
         new_room.save()
         return redirect("/")
     context = {"categories": categories}

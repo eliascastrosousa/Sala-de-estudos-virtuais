@@ -1,0 +1,53 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1 class="mb-5 font-bold text-3xl ">Olá, {{ user.first_name }}!</h1>
+
+<div class="container-sm text-3xl">
+    <h2> Criar Sala </h2>
+    <hr>
+    <br>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="text-3xl" for="nome">Nome:</label>
+            <input type="text" name="nome" id="nome" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="nome" class="text-3xl mb-2">Descrição:</label>
+            <input type="text" name="descricao" id="descricao" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="nome" class="text-3xl mb-2">Categoria:</label>
+            <select name="categoria" id="categoria" required>
+
+                <option selected disabled></option>
+                {% for category in categories %}
+                <option value="{{ category.name }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="nome" class="text-3xl mb-2" id="limite">Limite:</label>
+            <input type="number" name="limite" id="limite" value="1" min="1" max="99" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="imagem" class="text-3xl mb-2" id="imagem">Imagem:</label>
+            <input type="file" name="imagem" id="imagem">
+        </div>
+
+        <div class="mb-3">
+            <button type="button" class="btn btn-success"><input type="submit" value="Criar"></button>
+            <button type="button" class="btn btn-danger"><a href="{% url 'lobby' %}">Voltar</a></button>
+        </div>
+    </form>
+
+</div>
+
+{% endblock content %}

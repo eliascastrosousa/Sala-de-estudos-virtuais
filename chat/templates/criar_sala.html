@@ -12,13 +12,13 @@
         Criar Sala Virtual
     </h1>
     <hr>
-
-    <form method="POST">
+    <br>
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="col-sm-6 col-sm-6 mb-3">
             <label class="form-label mb-2">Username</label>
             <input type="text" class="form-control" name="username" value="{{request.user.username}}">
-          </div>
+        </div>
 
         <div class="col-sm-6 mb-3">
             <label class="form-label mb-2">Nome:</label>
@@ -32,23 +32,28 @@
 
         <div class="col-sm-6 mb-3">
             <label class="form-label mb-2">Categoria:</label>
-            <select name="categoria" id="categoria"  class="form-control" required>
+            <select name="categoria" id="categoria" class="form-control" required>
                 <option selected disabled>Selecione Aqui</option>
                 {% for category in categories %}
-                <option value="{{ categoria.0 }}">{{ category.1 }}</option>
+                <option value="{{ category.name }}">{{ category.name }}</option>
                 {% endfor %}
             </select>
         </div>
 
         <div class="col-sm-6 mb-3">
-            <label class="form-label mb-2" >Limite:</label>
-            <input type="number"  class="form-control" name="limite"  value="1" min="1" max="99" required>
+            <label class="form-label mb-2">Limite:</label>
+            <input type="number" class="form-control" name="limite" value="1" min="1" max="99" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Criar</button>
-        <a href="{% url 'lobby' %}"><input type="button" class="btn btn-secondary" value="Voltar"></a>
+        <div class="mb-3">
+            <label for="imagem" class="text-3xl mb-2" id="imagem">Imagem:</label>
+            <input type="file" name="imagem" id="imagem">
+        </div>
 
-        
+        <div class="mb-3">
+            <button type="button" class="btn btn-success"><input type="submit" value="Criar"></button>
+            <button type="button" class="btn btn-danger"><a href="{% url 'lobby' %}">Voltar</a></button>
+        </div>
     </form>
 
 </div>

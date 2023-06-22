@@ -7,36 +7,30 @@
 <div class="container mt-5">
     <img src="/static/img/coruja.png" width="72" height="72">
 
-
     <h1>Salas virtuais disponiveis </h1>
     <hr>
 
     <div class="row">
         <div class="col-sm-6">
             <div class="input-group mb-3">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected disabled>Categorias</option>
-                    <option value="1">Programação</option>
-                    <option value="2">Desenvolvimento Front-end</option>
-                    <option value="3">Desenvolvimento Back-end</option>
-                    <option value="3">Segurança</option>
-                    <option value="3">Banco de dados</option>
-                </select>
-                <button class="btn btn-primary" id="button-addon2">Aplicar</button>
+                {% for room in user_rooms %}
+                <div class="card" style="width: 18rem; margin: 1%;">
+                    {% if room.image %}
+                    <img src="{{ room.image.url }}" class="card-img-top" alt="...">
+                    {% else %}
+                    <img src="/static/img/coruja.png" class="card-img-top" alt="...">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ room.name }}</h5>
+                        <p class="card-text">{{ room.description }}</p> <br>
+                        <span>{{ room.members.count }} / {{ room.max_participants }}</span>
+                        <a href="{% url 'chat' room.id %}" class="btn btn-primary">Entrar</a>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
-
-    <div class="card" style="width: 18rem;">
-        <img src="/static/img/coruja.png" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div>
-
 </div>
 
 {% endblock content %}
