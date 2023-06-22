@@ -29,7 +29,6 @@
             <label class="form-label mb-2">Descrição:</label>
             <input type="text" class="form-control" name="descricao" id="descricao" required>
         </div>
-
         <div class="col-sm-6 mb-3">
             <label class="form-label mb-2">Categoria:</label>
             <select name="categoria" id="categoria" class="form-control" required>
@@ -38,6 +37,8 @@
                 <option value="{{ category.name }}">{{ category.name }}</option>
                 {% endfor %}
             </select>
+            <a href="{% url 'adicionarcategoria' %}"><label class="form-label mb-2">Adicionar</label></a>
+
         </div>
 
         <div class="col-sm-6 mb-3">
@@ -51,9 +52,10 @@
         </div>
 
         <div class="mb-3">
-            <button type="button" class="btn btn-success"><input type="submit" value="Criar"></button>
-            <button type="button" class="btn btn-danger"><a href="{% url 'lobby' %}">Voltar</a></button>
+            <button type="submit" class="btn btn-success">Criar</button>
+            <a href="{% url 'lobby'  %}"><input type="button" class="btn btn-secondary" value="Voltar"></a>
         </div>
+
     </form>
 
 </div>

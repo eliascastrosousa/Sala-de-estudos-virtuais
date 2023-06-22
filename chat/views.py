@@ -10,10 +10,20 @@ from django.contrib.auth.models import User
 from .utils import check_if_user_can_join, unauthenticated_user
 
 
+
+
 @unauthenticated_user
 def landing(request):
     return render(request, "landing.html")
 
+@login_required
+def adicionarcategoria(request):
+    if request.method == "POST":
+        name = request.POST.get("name", None)
+        Category.objects.create(name = name)
+        return redirect('criar_sala') 
+
+    return render(request, "adicionarcategoria.html")
 
 @login_required(login_url="/auth/login/")
 def lobby(request):
