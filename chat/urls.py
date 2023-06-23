@@ -16,7 +16,7 @@ from .views import (
     delete_roadmap,
     create_document,
     delete_document,
-    adicionarcategoria
+    adicionarcategoria,
 )
 
 urlpatterns = [
@@ -27,7 +27,6 @@ urlpatterns = [
     path("chat/<str:room_id>/", chat, name="chat"),
     path("criar_sala/", create_room, name="criar_sala"),
     path("adicionarcategoria/", adicionarcategoria, name="adicionarcategoria"),
-
     # Aviso
     path("avisos/<str:room_id>/", announcements_list, name="avisos"),
     path("criar_aviso/<str:room_id>/", create_announcement, name="criar_aviso"),
