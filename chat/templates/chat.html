@@ -6,7 +6,7 @@
 <style>
   .message-text {
     word-break: break-word;
-    background-color: #e0e1dd;
+
   }
 </style>
 
@@ -103,15 +103,23 @@
 
         <form id="form">
           <div id="scrollbar" style="overflow-y: scroll; height: 400px;">
-            <div id="messages"></div>
+            <div id="messages">
+              {% for message in messages %}
+              <div>
+                <p class="message-text">{{ message.sender }}: {{ message.text }} <small>| {{ message.time }}</small>
+                </p>
+              </div>
+              {% endfor %}
+            </div>
           </div>
 
 
           <div class="input-group mb-3">
-            <input type="text" name="messageInput" class="form-control">
+            <input type="text" name="messageInput" class="form-control" required>
             <button class="btn btn-outline-info" type="submit" id="button-addon2">Enviar</button>
           </div>
         </form>
+        <a href="{% url 'mensagens' room_id %}">Ver todas as mensagens...</a>
       </div>
 
 

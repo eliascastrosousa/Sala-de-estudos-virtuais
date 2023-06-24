@@ -3,6 +3,7 @@ from .views import (
     lobby,
     rooms,
     chat,
+    all_messages,
     create_room,
     announcements_list,
     edit_announcement,
@@ -39,4 +40,6 @@ urlpatterns = [
     # Documento
     path("criar_documento/<str:room_id>/<str:roadmap_id>/", create_document, name="criar_documento"),
     path("deletar_documento/<str:room_id>/<str:document_id>/", delete_document, name="deletar_documento"),
+    # Mensagens
+    path("mensagens/<str:room_id>/", all_messages, name="mensagens"),
 ]

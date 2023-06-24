@@ -3,7 +3,7 @@ from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 from datetime import datetime
 from .firebase import database
-from .utils import Message, append_message_to_json
+from .message_manager import Message, append_message_to_json
 
 
 class ChatConsumer(WebsocketConsumer):

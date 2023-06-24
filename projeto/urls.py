@@ -21,8 +21,8 @@ from django.views.static import serve
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("chat.urls")),
-    path("auth/", include("usuarios.urls")),
+    path("", include("usuarios.urls")),
+    path("chat/", include("chat.urls")),
     re_path(r"^download/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),
     re_path(r"^ckeditor/", include("ckeditor_uploader.urls")),
 ]

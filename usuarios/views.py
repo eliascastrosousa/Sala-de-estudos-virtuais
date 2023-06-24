@@ -16,7 +16,7 @@ import email.message
 
 @unauthenticated_user
 def landing(request):
-    return render(request, "landing.html", context)
+    return render(request, "landing.html")
 
 
 def enviar_email(first_name, emailusuario, codigo):
@@ -184,18 +184,18 @@ def login(request):
             return render(request, "login.html", {"error": "Username ou senha invalidos."})
 
 
-@login_required(login_url="/auth/login/")
+@login_required(login_url="login")
 def perfil(request):
     return render(request, "perfil.html")
 
 
-@login_required(login_url="/auth/login/")
+@login_required(login_url="login")
 def deslogar_usuario(request):
     logout(request)
     return redirect("landing")
 
 
-@login_required(login_url="/auth/login/")
+@login_required(login_url="login")
 def alterar_senha(request):
     if request.method == "POST":
         form_senha = PasswordChangeForm(request.user, request.POST)
