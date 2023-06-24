@@ -11,18 +11,20 @@
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 {% if user.is_authenticated %}
-                    {% if request.user.is_superuser  %}
-                            <li class="nav-item">
-                                <a class="nav-link active text-warning " aria-current="page" href="{% url 'criar_sala' %}">Criar Sala Virtual</a>
-                            </li>
-                    {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link active text-warning " aria-current="page" href="{% url 'rooms' %}">Explorar Salas Virtuais</a>
-                    </li>
+                {% if request.user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link active text-warning " aria-current="page" href="{% url 'criar_sala' %}">Criar
+                        Sala Virtual</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link active text-warning " aria-current="page" href="{% url 'rooms' %}">Minhas
+                        salas</a>
+                </li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">

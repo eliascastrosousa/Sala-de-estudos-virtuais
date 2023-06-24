@@ -15,10 +15,6 @@
     <br>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="col-sm-6 col-sm-6 mb-3">
-            <label class="form-label mb-2">Username</label>
-            <input type="text" class="form-control" name="username" value="{{request.user.username}}">
-        </div>
 
         <div class="col-sm-6 mb-3">
             <label class="form-label mb-2">Nome:</label>
@@ -38,7 +34,7 @@
                 <option value="{{ category.name }}">{{ category.name }}</option>
                 {% endfor %}
             </select>
-             <a href="{% url 'adicionarcategoria' %}"> <label class="form-label mb-2">Cadastrar Categoria</label></a>
+            <a href="{% url 'adicionarcategoria' %}"> <label class="form-label mb-2">Cadastrar Categoria</label></a>
 
         </div>
 

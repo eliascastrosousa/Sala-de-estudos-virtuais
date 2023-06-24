@@ -1,0 +1,28 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block 'title' %}Todas as mensagens{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <img src="/static/img/coruja.png" width="72" height="72">
+
+
+    <h1>
+        Todas as mensagens
+    </h1>
+    <hr>
+    <br>
+    <a href="{% url 'chat' room_id %}">Voltar</a>
+    <ul>
+        {% for message in all_messages %}
+        <li>{{ message.text }}</li>
+        <li>{{ message.sender }}</li>
+        <li>{{ message.time }}</li>
+        <li>{{ message.date }}</li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+{% endblock content %}
