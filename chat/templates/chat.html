@@ -3,6 +3,12 @@
 {% block 'title' %}Painel Chat{% endblock %}
 {% block content %}
 
+<style>
+  .message-text {
+    word-break: break-word;
+    background-color: #e0e1dd;
+  }
+</style>
 
 <div class="container mt-5">
   <img src="/static/img/coruja.png" width="72" height="72">
@@ -96,7 +102,10 @@
         <h2 class="mt-3">Chat</h2>
 
         <form id="form">
-          <div id="messages" style="background-color: #e0e1dd;height: 400px; "></div>
+          <div id="scrollbar" style="overflow-y: scroll; height: 400px;">
+            <div id="messages"></div>
+          </div>
+
 
           <div class="input-group mb-3">
             <input type="text" name="messageInput" class="form-control">
@@ -146,15 +155,13 @@
     let form = document.getElementById('form')
     form.addEventListener('submit', (e) => {
       e.preventDefault()
-      let message = e.target.messageInput.value
-      let username = "{{ request.user.username|escapejs }}"
+      let text = e.target.messageInput.value
+      let sender = "{{ request.user.username|escapejs }}"
       let room = "{{ room_id }}"
 
-      console.log(username)
-
       chatSocket.send(JSON.stringify({
-        'message': message,
-        'username': username,
+        'text': text,
+        'sender': sender,
         'room': room
       }))
       form.reset()
@@ -162,14 +169,16 @@
 
     chatSocket.onmessage = function (e) {
       let data = JSON.parse(e.data)
-      console.log('Data:', data)
 
       if (data.type === 'chat') {
         let messages = document.getElementById('messages')
+        let scrollbar = document.getElementById('scrollbar')
 
         messages.insertAdjacentHTML('beforeend', `<div>
-                                <p>${data.username}: ${data.message} <small>|  ${data.sent}</small></p>
+                                <p class="message-text">${data.sender}: ${data.text} <small>|  ${data.time}</small></p>
                             </div>`)
+
+        scrollbar.scrollTop = messages.scrollHeight;
       }
     }
   </script>

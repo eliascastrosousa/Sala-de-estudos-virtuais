@@ -8,30 +8,35 @@ from .models import Announcement, Room, Category, Roadmap, Document
 from .filters import RoomFilter
 from django.contrib.auth.models import User
 from .utils import check_if_user_can_join, unauthenticated_user
-from . import firebase
-
-
-@unauthenticated_user
-def landing(request):
-    return render(request, "landing.html")
+from .firebase import database
 
 
 @login_required
-def adicionarcategoria(request):
+def create_category(request):
     if request.method == "POST":
         name = request.POST.get("name", None)
         Category.objects.create(name=name)
         return redirect("criar_sala")
 
-    return render(request, "adicionarcategoria.html")
+    return render(request, "adicionar_categoria.html")
 
 
 @login_required(login_url="/auth/login/")
 def lobby(request):
+    text = database.child("message").child("text").get().val()
+    sender = database.child("message").child("sender").get().val()
+    time = database.child("message").child("time").get().val()
+    date = database.child("message").child("date").get().val()
+    room = database.child("message").child("room").get().val()
+
     room_filter = RoomFilter(request.GET, queryset=Room.objects.all())
     context = {
-        "rooms": rooms,
         "room_filter": room_filter,
+        "text": text,
+        "sender": sender,
+        "time": time,
+        "date": date,
+        "room": room,
     }
     return render(request, "lobby.html", context)
 

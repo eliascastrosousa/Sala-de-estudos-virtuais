@@ -2,7 +2,8 @@ import json
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 from datetime import datetime
-from . import firebase
+from .firebase import database
+from .utils import Message, append_message_to_json
 
 
 class ChatConsumer(WebsocketConsumer):
@@ -15,29 +16,31 @@ class ChatConsumer(WebsocketConsumer):
 
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message = text_data_json["message"]
-        username = text_data_json["username"]
-        room_id = text_data_json["room"]
-        sent_time = datetime.now().strftime("%H:%M")
-        sent_date = datetime.now().strftime("%d-%m-%Y")
+        text = text_data_json["text"]
+        sender = text_data_json["sender"]
+        room = text_data_json["room"]
+        time = datetime.now().strftime("%H:%M")
+        date = datetime.now().strftime("%d-%m-%Y")
 
         # Store in non-relational database here
+        message = Message(text=text, sender=sender, time=time, date=date, room=room)
+        append_message_to_json(message, room)
 
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
                 "type": "chat_message",
-                "message": message,
-                "username": username,
-                "room": room_id,
-                "sent_time": sent_time,
-                "sent_date": sent_date,
+                "text": text,
+                "sender": sender,
+                "room": room,
+                "time": time,
+                "date": date,
             },
         )
 
     def chat_message(self, event):
-        message = event["message"]
-        username = event["username"]
-        sent_time = event["sent_time"]
+        text = event["text"]
+        sender = event["sender"]
+        time = event["time"]
 
-        self.send(text_data=json.dumps({"type": "chat", "message": message, "username": username, "sent": sent_time}))
+        self.send(text_data=json.dumps({"type": "chat", "text": text, "sender": sender, "time": time}))
