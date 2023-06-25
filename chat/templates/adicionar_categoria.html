@@ -1,0 +1,43 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block 'title' %}Lobby{% endblock %}
+{% block content %}
+
+<div class="container mt-5">
+    <img src="/static/img/coruja.png" width="72" height="72">
+
+
+    <h1>Adicionar Categoria</h1>
+    <hr>
+
+    <form method="POST" action="{% url 'adicionar_categoria' %}">
+        {% csrf_token %}
+        <div class="col-sm-6 col-sm-6 mb-3">
+            <label class="form-label mb-2">Categoria</label>
+            <input type="text" class="form-control" name="name">
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-success">Criar</button>
+            <a href="{% url 'criar_sala' %}"><input type="button" class="btn btn-secondary" value="Voltar"></a>
+        </div>
+
+    </form>
+    {% if categories %}
+    <div>
+        <h2>Categorias disponíveis</h2>
+        <ul>
+            {% for category in categories %}
+            <li>
+                <span>{{ category.name }}</span>
+                <span>
+                    <a href="{% url 'deletar_categoria' category.id %}">Deletar
+                    </a>
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock content %}

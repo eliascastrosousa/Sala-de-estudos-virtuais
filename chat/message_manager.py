@@ -75,3 +75,12 @@ def retrieve_messages_from_firebase(room_id):
     messages = [message.val() for message in messages_objects.each()]
     print(messages)
     return messages
+
+
+def delete_messages_from_json(room_id):
+    file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "stored_messages", f"room{room_id}.json")
+    os.remove(file_path)
+
+
+def delete_messages_from_firebase(room_id):
+    database.child("room" + room_id).remove()
