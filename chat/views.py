@@ -39,7 +39,6 @@ def chat(request, room_id):
         return render(request, "lobby.html")
     else:
         chat_messages = retrieve_messages_from_json(room_id)
-        print(chat_messages)
         announcements = Announcement.objects.filter(room=room_id)[:4]
         roadmaps = Roadmap.objects.filter(room=room_id)[:4]
         context = {
@@ -105,8 +104,6 @@ def edit_announcement(request, room_id, announcement_id):
 def delete_announcement(request, room_id, announcement_id):
     if request.method == "POST":
         announcement = Announcement.objects.get(id=announcement_id)
-        print(announcement)
-        print(room_id)
         announcement.delete()
         return redirect(reverse("avisos", args=[room_id]))
 

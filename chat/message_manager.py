@@ -34,9 +34,7 @@ def append_message_to_json(message, room_id):
         data = []
 
     data.append(message_data)
-
     num_messages = len(data)
-    print(num_messages)
 
     if num_messages >= NUMBER_MESSAGES_THRESHOLD:
         messages_to_save = data[:NUMBER_MESSAGES_TO_SAVE]
@@ -51,9 +49,6 @@ def append_message_to_json(message, room_id):
         # Clear the JSON file
         with open(file_path, "w") as json_file:
             json.dump(data, json_file)
-
-        print(f"{NUMBER_MESSAGES_TO_SAVE} older messages saved to the database.")
-        print(f"{NUMBER_MESSAGES_TO_KEEP} recent messages kept in the JSON file.")
 
     with open(file_path, "w") as json_file:
         json.dump(data, json_file)
@@ -73,7 +68,6 @@ def retrieve_messages_from_json(room_id):
 def retrieve_messages_from_firebase(room_id):
     messages_objects = database.child("room" + room_id).get()
     messages = [message.val() for message in messages_objects.each()]
-    print(messages)
     return messages
 
 

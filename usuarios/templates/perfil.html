@@ -1,6 +1,6 @@
 {% extends 'main.html' %}
 {% load static %}
-{% block 'title' %}Perfil{% endblock %}
+{% block 'title' %} Perfil {% endblock %}
 {% block content %}
 
 <div class="container mt-5">
@@ -11,9 +11,9 @@
   <hr>
 
   <div style="color: white;">
-    <h4> Username: {{request.user.username}}</h4>
-    <h4> Nome: {{request.user.first_name}} {{request.user.last_name}}</h4>
-    <h4> Email: {{request.user.email}}</h4>
+    <h4> Username: {{ request.user.username }}</h4>
+    <h4> Nome: {{ request.user.first_name }} {{ request.user.last_name }}</h4>
+    <h4> Email: {{ request.user.email }}</h4>
   </div>
 
   <br>
