@@ -94,3 +94,4 @@ salas-virtuais/db.sqlite3
 # Random stuff
 media
 .mypy_cache
+.vscode/

@@ -1,10 +1,12 @@
 from django.urls import path
 from .views import (
-    landing,
     lobby,
     rooms,
     chat,
+    all_messages,
     create_room,
+    edit_room,
+    delete_room,
     announcements_list,
     edit_announcement,
     create_announcement,
@@ -16,15 +18,20 @@ from .views import (
     delete_roadmap,
     create_document,
     delete_document,
+    create_category,
+    delete_category,
 )
 
 urlpatterns = [
     # Sala
-    path("", landing, name="landing"),
     path("lobby/", lobby, name="lobby"),
     path("rooms/", rooms, name="rooms"),
     path("chat/<str:room_id>/", chat, name="chat"),
     path("criar_sala/", create_room, name="criar_sala"),
+    path("editar_sala/<str:room_id>/", edit_room, name="editar_sala"),
+    path("deletar_sala/<str:room_id>/", delete_room, name="deletar_sala"),
+    path("adicionar_categoria/", create_category, name="adicionar_categoria"),
+    path("deletar_categoria/<str:category_id>/", delete_category, name="deletar_categoria"),
     # Aviso
     path("avisos/<str:room_id>/", announcements_list, name="avisos"),
     path("criar_aviso/<str:room_id>/", create_announcement, name="criar_aviso"),
@@ -39,4 +46,6 @@ urlpatterns = [
     # Documento
     path("criar_documento/<str:room_id>/<str:roadmap_id>/", create_document, name="criar_documento"),
     path("deletar_documento/<str:room_id>/<str:document_id>/", delete_document, name="deletar_documento"),
+    # Mensagens
+    path("mensagens/<str:room_id>/", all_messages, name="mensagens"),
 ]

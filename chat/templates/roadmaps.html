@@ -1,40 +1,57 @@
 {% extends 'main.html' %}
 {% load static %}
+{% block 'title' %}RoadMaps{% endblock %}
 
 {% block content %}
 
-{% if request.user.is_superuser %}
-<a href="{% url 'criar_roadmap' room_id  %}">Criar</a>
-{% endif %}
 
-<div class="container">
-    <ul>
-        <li>Últimas atualizações</li>
-        {% if roadmaps %}
+
+<div class="container mt-5">
+    <img src="/static/img/coruja.png" width="72" height="72">
+
+    <h1>Road Maps {{room.name }}</h1>
+    <hr>
+
+
+    {% if request.user.is_superuser %}
+    <a href="{% url 'criar_roadmap' room_id  %}"><input type="button" class="btn btn-primary" value="Criar Roadmap"></a>
+    {% endif %}
+    <br>
+    <br>
+
+    {% if roadmaps %}
         {% for roadmap in roadmaps %}
-        <a href="{% url 'roadmap' room_id roadmap.id  %}">Título: {{ roadmap.title }}</a>
-        {% if roadmap.document_set.exists %}
-        <ul>
-            {% for document in roadmap.document_set.all %}
-            <li><a href="{{ document.file.url }}" download>{{ document.title }}</a></li>
-            {% if request.user.is_superuser %}
-            <a href="{% url 'deletar_documento' room_id document.id %}">Excluir documento</a>
-            {% endif %}
-            <!-- Display other document attributes as needed -->
-            {% endfor %}
-        </ul>
-        {% else %}
-        <p>Nenhum documento disponível para este guia</p>
-        {% endif %}
+        <div class="card" style="width: 18rem; background-color: #14213d; text-align: center; color: white;">
+            <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'roadmap' room_id roadmap.id  %}">{{ roadmap.title }}</a>
+                </h5>
+                {% if roadmap.document_set.exists %}
+                    {% for document in roadmap.document_set.all %}
+                        <a href="{{ document.file.url }}" download>{{ document.title }}</a>
+                        {% if request.user.is_superuser %}
+                            <a href="{% url 'deletar_documento' room_id document.id %}">Excluir documento</a>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p>Nenhum documento disponível para este guia</p>
+                {% endif %}
+                {% if request.user.is_superuser %}
+                <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{roadmap.id}}">Adicionar documento</a>
+                {% endif %}
+            </div>
+        </div>
+        <br>
+     
+
+    
         {% if request.user.is_superuser %}
-        <li type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{roadmap.id}}">Adicionar documento</li>
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal{{roadmap.id}}" tabindex="-1" role="dialog"
+        <div class="modal fade text-black" id="exampleModal{{roadmap.id}}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Adicionar documento a {{ roadmap.title }}</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Adicionar documento a "{{ roadmap.title }}"</h5>
                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -58,10 +75,9 @@
         {% else %}
         <p>Sem guias de estudo disponíveis</p>
         {% endif %}
-        <hr>
-    </ul>
+    <a href="{% url 'chat' room_id %}"><input type="button" class="btn btn-secondary" value="Voltar"></a>
+
 </div>
 
-<a href="{% url 'chat' room_id  %}">Voltar</a>
 
 {% endblock content %}

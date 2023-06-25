@@ -1,86 +1,197 @@
 {% extends 'main.html' %}
 {% load static %}
-
+{% block 'title' %}Painel Chat{% endblock %}
 {% block content %}
 
-<h1 class="mb-5 font-bold text-3xl">Bem vindo à {{ room_id }}, {{ user.first_name }}!</h1>
+<style>
+  .message-text {
+    word-break: break-word;
 
-<head>
-  {{ form.media }}
-</head>
+  }
+</style>
 
-<div class="container text-center">
-  <b>Arquivos de Aula</b>
-</div>
-<div class="col">
-  <form id="form">
-    <div style="border-radius: 10px;"></div>
-    <div id="messages" style="background-color: #cbdfbd;height: 600px; "></div>
+<div class="container mt-5">
+  <img src="/static/img/coruja.png" width="72" height="72">
 
-    <div class="input-group">
-      <input type="hidden" name="username" value="{{ request.user.username }}">
-      {{ form }}
-      <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Enviar</button>
-    </div>
+  <h1>PAINEL SALA</h1>
+  <hr>
 
-  </form>
-</div>
+  <div class="container mt-2">
+    <div class="row g-2 needs-validation p-4">
+      <div class="col-md-12" style="background-color: #264653; text-align: center;">
 
-<div class="container">
-  <p>Avisos</p>
-  <ul>
-    {% for announcement in announcements %}
-    <li type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{announcement.id}}">
-      {{ announcement.title }}</li>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal{{announcement.id}}" tabindex="-1" role="dialog"
-      aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">{{ announcement.title }}</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+        <h2 class="">Guia de Estudos</h2>
+        <p> Últimas atualizações</p>
+
+        <div class="container">
+          <div class="row">
+            {% if roadmaps %}
+            {% for roadmap in roadmaps %}
+            <div class="col-md-2 m-5">
+              <div class="card m-2"
+                style="width: 250px; height: 250px; background-color: #14213d; text-align: center; color: white;">
+                <div class="card-body">
+                  <h5 class="card-title"><a href="{% url 'roadmap' room_id roadmap.id  %}">{{ roadmap.title }}</a>
+                  </h5>
+                  {% if roadmap.document_set.exists %}
+                  {% for document in roadmap.document_set.all %}
+                  <a href="{{ document.file.url }}" download>{{ document.title }}</a>
+                  {% if request.user.is_superuser %}
+                  <a href="{% url 'deletar_documento' room_id document.id %}">Excluir documento</a>
+                  {% endif %}
+                  {% endfor %}
+                  {% else %}
+                  <p>Nenhum documento disponível para este guia</p>
+                  {% endif %}
+                  {% if request.user.is_superuser %}
+                  <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{roadmap.id}}">Adicionar
+                    documento</a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            {% endif %}
           </div>
-          <div class="modal-body">
-            {{ announcement.description }}
+        </div>
+        <div class="container">
+          <a href="{% url 'roadmaps' room_id %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle"
+              viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+              <path
+                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+            </svg>
+          </a>
+        </div>
+        <br>
+      </div>
+
+      <div class="col-md-4" style="background-color: #264653; text-align: center;">
+        <h2 class="mt-3">Avisos</h2>
+        <p> Últimas atualizações</p>
+        <ol class="list-group list-group-numbered">
+          {% for announcement in announcements %}
+          <li class="list-group-item d-flex" style="background-color: #778da9;">
+            <div class="ms-2 me-auto">
+
+              <div class="fw-bold" type="button" data-bs-toggle="modal"
+                data-bs-target="#exampleModal{{announcement.id}}">
+                {{ announcement.title }}
+              </div>
+
+            </div>
+          </li>
+          <br>
+          {% endfor %}
+        </ol>
+        <br>
+        <div class="container p-4">
+          <a href="{% url 'avisos' room_id %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle"
+              viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+              <path
+                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-8" style="background-color: #264653; text-align: center;">
+        <h2 class="mt-3">Chat</h2>
+
+        <form id="form">
+          <div id="scrollbar" style="overflow-y: scroll; height: 400px;">
+            <div id="messages">
+              {% for message in messages %}
+              <div>
+                <p class="message-text">{{ message.sender }}: {{ message.text }} <small>| {{ message.time }}</small>
+                </p>
+              </div>
+              {% endfor %}
+            </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+
+          <div class="input-group mb-3">
+            <input type="text" name="messageInput" class="form-control" required>
+            <button class="btn btn-outline-info" type="submit" id="button-addon2">Enviar</button>
+          </div>
+        </form>
+        <a href="{% url 'mensagens' room_id %}">Ver todas as mensagens...</a>
+        <a href="{% url 'editar_sala' room_id %}">Editar sala</a>
+        <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="card-link">Deletar sala</a>
+      </div>
+
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Deletar sala</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Deseja mesmo deletar a sala?
+              {{room_id}}
+            </div>
+            <div class="modal-footer">
+              <form method="post" action="{% url 'deletar_sala' room_id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Deletar</button>
+              </form>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
           </div>
         </div>
       </div>
+
     </div>
-</div>
-{% endfor %}
-</ul>
-<a href="{% url 'avisos' room_id %}">Ver todos...</a>
-
-<div class="container">
-  <ul>
-    <li>Últimas atualizações</li>
-    {% if roadmaps %}
-    {% for roadmap in roadmaps %}
-    <li><a href="{% url 'roadmap' room_id roadmap.id  %}">Título: {{ roadmap.title }}</a></li>
-    {% if roadmap.document_set.exists %}
-    <ul>
-      {% for document in roadmap.document_set.all %}
-      <li><a href="{{ document.file.url }}" download>{{ document.title }}</a></li>
-      <!-- Display other document attributes as needed -->
-      {% endfor %}
-    </ul>
-    {% else %}
-    <p>Nenhum documento disponível para este guia</p>
-    {% endif %}
-    {% endfor %}
-    {% else %}
-    <p>Sem guias de estudo disponíveis</p>
-    {% endif %}
-  </ul>
-  <a href="{% url 'roadmaps' room_id %}">Ver todos...</a>
-</div>
+  </div>
 
 
-<script src="{% static 'js/chat.js' %}"></script>
-{% endblock content %}
+  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+    crossorigin="anonymous"></script>
+  <script>
+    let path = window.location.pathname;
+    let pathParts = path.split('/');
+    let roomName = pathParts[pathParts.length - 2];
+
+    let url = `ws://${window.location.host}/ws/socket-server/${roomName}/`
+
+    const chatSocket = new WebSocket(url)
+
+    let form = document.getElementById('form')
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+      let text = e.target.messageInput.value
+      let sender = "{{ request.user.username|escapejs }}"
+      let room = "{{ room_id }}"
+
+      chatSocket.send(JSON.stringify({
+        'text': text,
+        'sender': sender,
+        'room': room
+      }))
+      form.reset()
+    })
+
+    chatSocket.onmessage = function (e) {
+      let data = JSON.parse(e.data)
+
+      if (data.type === 'chat') {
+        let messages = document.getElementById('messages')
+        let scrollbar = document.getElementById('scrollbar')
+
+        messages.insertAdjacentHTML('beforeend', `<div>
+                                <p class="message-text">${data.sender}: ${data.text} <small>|  ${data.time}</small></p>
+                            </div>`)
+
+        scrollbar.scrollTop = messages.scrollHeight;
+      }
+    }
+  </script>
+  {% endblock content %}

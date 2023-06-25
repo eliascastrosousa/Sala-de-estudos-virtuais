@@ -1,27 +1,34 @@
 {% extends 'main.html' %}
 {% load static %}
+{% block 'title' %}Criar Aviso{% endblock %}
 
 {% block content %}
 
-<div class="container">
-    <form method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label class="text-3xl" for="titulo">Titulo:</label>
-            <input type="text" name="titulo" id="titulo" required>
-        </div>
 
-        <div class="mb-3">
-            <label for="descricao" class="text-3xl mb-2">Descrição:</label>
-            <input type="text" name="descricao" id="descricao" required>
-        </div>
+<div class="container mt-5">
+    <img src="/static/img/coruja.png" width="72" height="72">
+  
+  
+    <h1>Criar Aviso</h1>
+    <hr>
+  
+    <form method="POST">{% csrf_token %}
 
-        <div class="mb-3">
-            <button type="button" class="btn btn-success"><input type="submit" value="Salvar"></button>
+        <div class="col-sm-6 mb-3">
+            <label class="form-label">Titulo:</label>
+            <input type="text" class="form-control"  name="titulo" id="titulo" required>
+        </div>
+        <div class="col-sm-6 mb-3">
+            <label class="form-label">Descrição:</label>
+            <input type="text" class="form-control" name="descricao" id="descricao" required>
+        </div>
+        <div class="col-sm-6 mb-3">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="{% url 'avisos' room_id %}"><input type="button" value="Voltar" class="btn btn-secondary"></a>
         </div>
     </form>
 </div>
 
-<a href="{% url 'avisos' room_id %}">Voltar</a>
+
 
 {% endblock content %}
