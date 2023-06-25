@@ -1,14 +1,16 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import get_object_or_404, render, redirect, reverse
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm
-from chat.forms import DocumentForm, MessageForm, RoadmapForm
+from chat.forms import DocumentForm, RoadmapForm
 from .models import Announcement, Room, Category, Roadmap, Document
 from .filters import RoomFilter
-from django.contrib.auth.models import User
-from .utils import check_if_user_can_join, unauthenticated_user
-from .message_manager import retrieve_messages_from_json, retrieve_messages_from_firebase
+from .utils import check_if_user_can_join
+from .message_manager import (
+    delete_messages_from_firebase,
+    delete_messages_from_json,
+    retrieve_messages_from_json,
+    retrieve_messages_from_firebase,
+)
 
 
 @login_required(login_url="/login/")
@@ -37,7 +39,6 @@ def chat(request, room_id):
         return render(request, "lobby.html")
     else:
         chat_messages = retrieve_messages_from_json(room_id)
-        print(chat_messages)
         announcements = Announcement.objects.filter(room=room_id)[:4]
         roadmaps = Roadmap.objects.filter(room=room_id)[:4]
         context = {
@@ -103,8 +104,6 @@ def edit_announcement(request, room_id, announcement_id):
 def delete_announcement(request, room_id, announcement_id):
     if request.method == "POST":
         announcement = Announcement.objects.get(id=announcement_id)
-        print(announcement)
-        print(room_id)
         announcement.delete()
         return redirect(reverse("avisos", args=[room_id]))
 
@@ -126,6 +125,39 @@ def create_room(request):
         return redirect("/")
     context = {"categories": categories}
     return render(request, "criar_sala.html", context)
+
+
+@login_required(login_url="/login/")
+def edit_room(request, room_id):
+    categories = Category.objects.all()
+    room = get_object_or_404(Room, id=room_id)
+    if request.method == "POST":
+        name = request.POST.get("nome", None)
+        description = request.POST.get("descricao", None)
+        category_input = request.POST.get("categoria", None)
+        category = Category.objects.get(name=category_input)
+        image = request.FILES.get("imagem")
+        room.name = name
+        room.description = description
+        room.category = category
+        if image:
+            room.image = image
+        room.save()
+        return redirect("/")
+    context = {
+        "room": room,
+        "categories": categories,
+    }
+    return render(request, "editar_sala.html", context)
+
+
+@login_required(login_url="/login/")
+def delete_room(request, room_id):
+    room = Room.objects.get(id=room_id)
+    room.delete()
+    delete_messages_from_json(room_id)
+    delete_messages_from_firebase(room_id)
+    return redirect("/")
 
 
 @login_required(login_url="/login/")
@@ -227,11 +259,22 @@ def delete_document(request, room_id, document_id):
     return redirect(reverse("roadmaps", args=[room_id]))
 
 
-@login_required
+@login_required(login_url="/login/")
 def create_category(request):
+    categories = Category.objects.all()
     if request.method == "POST":
         name = request.POST.get("name", None)
         Category.objects.create(name=name)
         return redirect("criar_sala")
+    context = {
+        "categories": categories,
+    }
+    return render(request, "adicionar_categoria.html", context)
 
-    return render(request, "adicionar_categoria.html")
+
+@login_required(login_url="/login/")
+def delete_category(request, category_id):
+    category = Category.objects.get(id=category_id)
+    category.delete()
+    previous_url = request.META.get("HTTP_REFERER")
+    return redirect(previous_url)

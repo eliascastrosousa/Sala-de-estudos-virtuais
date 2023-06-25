@@ -5,6 +5,8 @@ from .views import (
     chat,
     all_messages,
     create_room,
+    edit_room,
+    delete_room,
     announcements_list,
     edit_announcement,
     create_announcement,
@@ -17,6 +19,7 @@ from .views import (
     create_document,
     delete_document,
     create_category,
+    delete_category,
 )
 
 urlpatterns = [
@@ -25,7 +28,10 @@ urlpatterns = [
     path("rooms/", rooms, name="rooms"),
     path("chat/<str:room_id>/", chat, name="chat"),
     path("criar_sala/", create_room, name="criar_sala"),
+    path("editar_sala/<str:room_id>/", edit_room, name="editar_sala"),
+    path("deletar_sala/<str:room_id>/", delete_room, name="deletar_sala"),
     path("adicionar_categoria/", create_category, name="adicionar_categoria"),
+    path("deletar_categoria/<str:category_id>/", delete_category, name="deletar_categoria"),
     # Aviso
     path("avisos/<str:room_id>/", announcements_list, name="avisos"),
     path("criar_aviso/<str:room_id>/", create_announcement, name="criar_aviso"),

@@ -2,7 +2,6 @@ import json
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 from datetime import datetime
-from .firebase import database
 from .message_manager import Message, append_message_to_json
 
 
@@ -22,7 +21,6 @@ class ChatConsumer(WebsocketConsumer):
         time = datetime.now().strftime("%H:%M")
         date = datetime.now().strftime("%d-%m-%Y")
 
-        # Store in non-relational database here
         message = Message(text=text, sender=sender, time=time, date=date, room=room)
         append_message_to_json(message, room)
 

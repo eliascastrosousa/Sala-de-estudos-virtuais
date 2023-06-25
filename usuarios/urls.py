@@ -1,4 +1,3 @@
-from . import views
 from django.urls import path
 from .views import landing, register, register2, alterar_senha, deslogar_usuario, perfil, login
 
