@@ -1,5 +1,17 @@
-# Sala-de-estudos-virtuais
+## Sala de estudos virtuais
 Projeto de Laboratório de Desenvolvimento de Sistemas 5º Semestre do IFSP
+
+### Requisitos
+
+Sala de estudos virtuais
+
+O estudo, em grupo, pode ser motivador uma vez que o apoio de colegas pode auxiliá-lo com temas desafiadores.
+
+Neste sentido, é interessante que estudantes possam se encontrar em uma sala de estudos comum e se preparar para qualquer tipo de tema junto com outros alunos que estão estudando para o mesmo assunto. Um sistema de salas virtuais de estudos, portanto, faz sentido nesse contexto.
+
+O sistema de sala de estudos virtuais deverá permitir que os alunos se conectem por meio de um chat de texto, o qual deverá ter seu histórico arquivado diariamente e disponibilizado para acesso dos estudantes em datas futuras. Os alunos também deverão ser capazes de compartilhar material de estudo em distintos formatos (.pdf , .doc e .docx, .xls e .xlsx, além de .zip). O sistema também deverá permitir que professores elaborem guias de estudo, além de inserirem material complementar e poder ministrar sessões de dúvidas com os alunos.
+
+---
 
 Para o chat funcionar, é necessário instalar o VS Microsoft C++ Build Tools:
 
@@ -14,7 +26,7 @@ https://github.com/bycloudai/InstallVSBuildToolsWindows
 ~~~
 
 ~~~powershell
-  .\env\scripts\activate
+  .\env\scripts\activate.ps1
 ~~~
 
 ~~~powershell
@@ -32,11 +44,6 @@ https://github.com/bycloudai/InstallVSBuildToolsWindows
 ~~~powershell
   python manage.py runserver
 ~~~
-![image](https://github.com/eliascastrosousa/Sala-de-estudos-virtuais/assets/73971067/df04dfd1-5e76-464a-9b7c-7947f00d7e39)
-![image](https://github.com/eliascastrosousa/Sala-de-estudos-virtuais/assets/73971067/27e91389-3bad-478e-b836-097bcfaf3956)
-![image](https://github.com/eliascastrosousa/Sala-de-estudos-virtuais/assets/73971067/a4f056cf-55f8-4f73-b964-e0ed83974028)
-![image](https://github.com/eliascastrosousa/Sala-de-estudos-virtuais/assets/73971067/50d358a8-7947-4a72-90bd-5810df20ba06)
-
 
 
 
