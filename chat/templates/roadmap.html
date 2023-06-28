@@ -1,54 +1,59 @@
 {% extends 'main.html' %}
 {% load static %}
-
+{% block 'title' %}Roadmap{% endblock %}
 {% block content %}
 
 
-<div class="container mt-5">
-    <img src="/static/img/coruja.png" width="72" height="72">
-    <h1>{{ roadmap.title }}</h1>
-    <hr>
+<div class="col m-5">
+    <div class="row text-amber-500 font-bold">
+        <p class="text-3xl font-bold mb-2">{{ roadmap.title }}</p>
+        <p class="text-2xl font-bold mb-5">{{ roadmap.description }}</p>
+    </div>
 
-    <div class="col-6" style="color: white; background-color: #023047;">
-        <h4> Titulo: {{ roadmap.title }}</h4>
-        <h4> Descrição: {{ roadmap.description }}</h4>
-        <hr>
+    <div class="row my-3 bg-white py-3 rounded">
         <h4>{{ roadmap.content | safe | urlize | linebreaks }}</h4>
         <hr>
-        <br>
         <h5>Criado por {{ roadmap.created_by }}</h5>
         <h5>Última atualização: {{ roadmap.updated }}</h5>
-      </div>
-    
-      <br>
-      <a href="{% url 'editar_roadmap' room_id roadmap.id %}"><input type="button" class="btn btn-info" value="Editar"></a>
-      <button class="btn btn-danger" type="button" id="button-addon2" data-bs-toggle="modal" data-bs-target="#exampleModal">Deletar</button>
-      <a href="{% url 'roadmaps' room_id  %}"><input type="button" class="btn btn-secondary" value="Voltar"></a>
-    <br>
+    </div>
 
-<!-- Modal -->
-<div class="modal fade text-black" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{ roadmap.title }}</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Deseja mesmo deletar o Roadmap "{{ roadmap.title }}?"
-            </div>
-            <div class="modal-footer">
-                <form method="post" action="{% url 'deletar_roadmap' room_id roadmap.id %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Deletar</button>
-                </form>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+    <div class="my-3 text-amber-500 font-bold">
+        <a href="{% url 'editar_roadmap' room_id roadmap.id %}"><input type="button"
+                class="bg-amber-500 w-48 hover:bg-amber-600 font-bold py-2 px-2 text-fuchsia-700 rounded"
+                value="Editar"></a>
+        <button class="bg-amber-500 w-48 hover:bg-amber-600 font-bold py-2 px-2 text-fuchsia-700 rounded" type="button"
+            id="button-addon2" data-bs-toggle="modal" data-bs-target="#exampleModal">Deletar</button>
+        <a href="{% url 'roadmaps' room_id  %}"><input type="button"
+                class="bg-amber-500 w-48 hover:bg-amber-600 font-bold py-2 px-2 text-fuchsia-700 rounded"
+                value="Voltar"></a>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade text-black" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ roadmap.title }}</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Deseja mesmo deletar o Roadmap "{{ roadmap.title }}?"
+                </div>
+                <div class="modal-footer">
+                    <form method="post" action="{% url 'deletar_roadmap' room_id roadmap.id %}">
+                        {% csrf_token %}
+                        <button type="submit"
+                            class="bg-red-500 w-48 hover:bg-red-600 font-bold py-2 px-2 text-fuchsia-700 rounded text-white">Deletar</button>
+                    </form>
+                    <button type="button"
+                        class="bg-blue-500 w-48 hover:bg-blue-600 font-bold py-2 px-2 text-fuchsia-700 rounded text-white"
+                        data-bs-dismiss="modal">Voltar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-{% endblock content %}
+    {% endblock content %}

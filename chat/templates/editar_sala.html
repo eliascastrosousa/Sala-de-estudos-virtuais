@@ -1,31 +1,31 @@
 {% extends 'main.html' %}
 {% load static %}
+{% block 'title' %}Editar Sala{% endblock %}
 
 {% block content %}
+<div class="col m-5 text-amber-500 font-bold">
+    <div class="row">
+        <h3 class="text-3xl font-bold mb-5">Editar Sala</h3>
+    </div>
 
-<h1 class="mb-5 font-bold text-3xl ">Olá, {{ user.first_name }}!</h1>
-
-<div class="container-sm text-3xl">
-    <h2> Editar Sala </h2>
-    <hr>
-    <br>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="mb-3">
-            <label class="text-3xl" for="nome">Nome:</label>
-            <input type="text" name="nome" id="nome" value="{{ room.name }}" required>
+
+        <div class="col-sm-6 mb-3">
+            <label class="form-label mb-2">Nome:</label>
+            <input type="text" class="form-control" name="nome" id="nome" value="{{ room.name }}" required>
         </div>
 
-        <div class="mb-3">
-            <label for="nome" class="text-3xl mb-2">Descrição:</label>
-            <input type="text" name="descricao" id="descricao" value="{{ room.description }}" required>
+        <div class="col-sm-6 mb-3">
+            <label for="nome" class="form-label mb-2">Descrição:</label>
+            <input type="text" class="form-control" name="descricao" id="descricao" value="{{ room.description }}"
+                required>
         </div>
 
-        <div class="mb-3">
-            <label for="nome" class="text-3xl mb-2">Categoria:</label>
-            <select name="categoria" id="categoria" required>
-
-                <option selected disabled></option>
+        <div class="col-sm-6 mb-3">
+            <label class="form-label mb-2">Categoria:</label>
+            <select name="categoria" id="categoria" class="form-control" required>
+                <option selected disabled>Selecione Aqui</option>
                 {% for category in categories %}
                 <option value="{{ category.name }}">{{ category.name }}</option>
                 {% endfor %}
@@ -38,11 +38,14 @@
         </div>
 
         <div class="mb-3">
-            <button type="button" class="btn btn-success"><input type="submit" value="Atualizar"></button>
-            <button type="button" class="btn btn-danger"><a href="{% url 'lobby' %}">Voltar</a></button>
+            <button type="button"
+                class="bg-amber-500 w-32 hover:bg-amber-600 font-bold py-2 px-4 text-fuchsia-700 rounded"><input
+                    type="submit" value="Atualizar"></button>
+            <button type="button"
+                class="bg-amber-500 w-32 hover:bg-amber-600 font-bold py-2 px-4 text-fuchsia-700 rounded"><a
+                    href="{% url 'lobby' %}">Voltar</a></button>
         </div>
     </form>
-
 </div>
 
 {% endblock content %}

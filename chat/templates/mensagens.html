@@ -4,22 +4,21 @@
 
 {% block content %}
 
-<div class="container mt-5">
-    <img src="/static/img/coruja.png" width="72" height="72">
-
-
-    <h1>
-        Todas as mensagens
-    </h1>
-    <hr>
-    <br>
-    <a href="{% url 'chat' room_id %}">Voltar</a>
-    <ul>
+<div class="col m-5 text-amber-500 font-bold">
+    <div class="row">
+        <h3 class="text-3xl font-bold mb-5">Todas as mensagens</h3>
+    </div>
+    <a class="bg-amber-500 w-48 hover:bg-amber-600 font-bold py-2 px-2 text-fuchsia-700 rounded"
+        href="{% url 'chat' room_id %}">Voltar</a>
+    <ul class="mt-3">
         {% for message in all_messages %}
-        <li>{{ message.text }}</li>
-        <li>{{ message.sender }}</li>
-        <li>{{ message.time }}</li>
-        <li>{{ message.date }}</li>
+        <div class="py-2">
+            <li>Mensagem: {{ message.text }}</li>
+            <li>Usuário: {{ message.sender }}</li>
+            <li>Horário: {{ message.time }}</li>
+            <li>Dia: {{ message.date }}</li>
+        </div>
+        <hr>
         {% endfor %}
     </ul>
 

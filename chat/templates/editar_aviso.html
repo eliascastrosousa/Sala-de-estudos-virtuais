@@ -3,14 +3,11 @@
 {% block 'title' %}Editar Aviso{% endblock %}
 
 {% block content %}
+<div class="col m-5 text-amber-500 font-bold">
+    <div class="row">
+        <h3 class="text-3xl font-bold mb-5">Editar Aviso</h3>
+    </div>
 
-<div class="container mt-5">
-    <img src="/static/img/coruja.png" width="72" height="72">
-  
-  
-    <h1>Editar Aviso</h1>
-    <hr>
-    
     <form method="post">
         {% csrf_token %}
         <div class="col-sm-3">
@@ -20,12 +17,16 @@
         <br>
         <div class="col-sm-3">
             <label class="form-label" for="descricao">Descrição:</label>
-            <input type="text" class="form-control" name="descricao" id="descricao" value="{{ announcement.description }}" required>
+            <input type="text" class="form-control" name="descricao" id="descricao"
+                value="{{ announcement.description }}" required>
         </div>
         <br>
 
-        <button type="submit" class="btn btn-primary">Salvar</button>
-        <a href="{% url 'avisos' room_id %}"><input type="button" class="btn btn-secondary" value="Voltar"></a>
+        <button type="submit"
+            class="bg-amber-500 w-48 hover:bg-amber-600 font-bold py-2 px-2 text-fuchsia-700 rounded">Salvar</button>
+        <a href="{% url 'avisos' room_id %}"><input type="button"
+                class="bg-amber-500 w-48 hover:bg-amber-600 font-bold py-2 px-2 text-fuchsia-700 rounded"
+                value="Voltar"></a>
 
     </form>
 </div>

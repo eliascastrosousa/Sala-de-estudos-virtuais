@@ -3,10 +3,37 @@
 
 {% block content %}
 
-<div class="container mt-5">
-  <img src="/static/img/coruja.png" width="150" height="150">
-
-  <h1>Bem vindo a Sala de Estudos</h1>
+<div class="col m-10 text-amber-500 font-bold">
+  <div class="row align-items-start my-3">
+    <div class="col mx-5">
+      <h2 class="mb-5 font-bold text-3xl">Jornadas de estudos</h2>
+      <p> Crie jornadas de estudos para seus alunos </p>
+    </div>
+    <div class="col mx-5">
+      <img src="{% static 'img/undraw_environmental_study_re_q4q8.svg' %}" class="card-img-top" alt="...">
+    </div>
+  </div>
   <hr>
+  <div class="row align-items-start my-3">
+    <div class="col mx-5">
+      <img src="{% static 'img/undraw_professor_re_mj1s.svg' %}" class="card-img-top" alt="...">
+    </div>
+    <div class="col mx-5">
+      <br><br><br>
+      <h2 class="mb-5 font-bold text-3xl">Crie um mural personalizado</h2>
+      <p>suba atividades, planos de estudos e mais na sua propria sala virtual</p>
+    </div>
+  </div>
+  <hr>
+  <div class="row align-items-start my-3">
+    <div class="col mx-5">
+      <br><br><br>
+      <h2 class="mb-5 font-bold text-3xl">Chats</h2>
+      <p> Interaja com seus colegas de Sala </p>
+    </div>
+    <div class="col mx-5">
+      <img src="{% static 'img/undraw_chatting_re_j55r.svg' %}" class="card-img-top" alt="...">
+    </div>
+  </div>
 
   {% endblock %}
