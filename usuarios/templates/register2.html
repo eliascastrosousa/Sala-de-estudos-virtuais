@@ -1,30 +1,37 @@
 {% extends 'main.html' %}
 {% load static %}
-{% block 'title' %}Autenticação 2 Etapas{% endblock %}
+{% block 'title' %}Cadastrar{% endblock %}
 
 {% block content %}
 
-<div class="container mt-5">
-    <img src="/static/img/coruja.png" width="72" height="72">
-
-    <h1>Autenticação de 2 etapas</h1>
-    <hr>
-
-    <form action="{% url 'register2' %}" method="POST">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label class="form-label">Codigo enviado por E-mail.</label>
-            <input type="text" class="form-control" name="codigoautenticacao">
+<div class="col m-3  text-amber-500 font-bold">
+    <div class="row mb-5">
+        <div class="row mb-2 flex justify-center">
+            <img src="{% static 'img/coruja.png' %}" class="w-48">
         </div>
-        <button type="submit" class="btn btn-primary">Enter</button>
+        <div class="row text-center">
+            <h3 class="text-3xl font-bold mb-3">Login</h3>
+        </div>
 
-    </form>
-    <br>
-    {% if error %}
-    <p>{{ error }}</p>
-    {% endif %}
-
-
-
+        <div class="row flex justify-center text-center">
+            <form class="w-1/2" action="{% url 'register2' %}" method="POST">
+                {% csrf_token %}
+                {% if error %}
+                <div class="row my-3 p-2 bg-fuchsia-600 text-amber-500 rounded">
+                    <p>{{ error }}</p>
+                </div>
+                {% endif %}
+                <div class="mb-3">
+                    <label class="form-label">Codigo enviado por E-mail.</label>
+                    <input type="text" class="form-control" name="codigoautenticacao">
+                </div>
+                <button type="submit"
+                    class="bg-amber-500 w-100 hover:bg-amber-600 font-bold py-2 px-4 text-fuchsia-700 rounded">
+                    Cadastrar
+                </button>
+            </form>
+        </div>
+    </div>
 </div>
+
 {% endblock %}

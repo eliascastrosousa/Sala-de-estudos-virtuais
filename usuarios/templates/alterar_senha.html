@@ -3,44 +3,52 @@
 {% block 'title' %}Alterar Senha{% endblock %}
 {% block content %}
 
-
-<div class="container mt-5">
-  <img src="/static/img/coruja.png" width="72" height="72">
-
-
-  <h1>Alterar Senha</h1>
-  <hr>
-
-  <form method="post">
-    {% csrf_token %}
-    {{ form_senha.old_password.errors }}
-    <div class="mb-3">
-      <label class="form-label">Senha antiga</label>
-      {{ form_senha.old_password }}
+<div class="col m-3  text-amber-500 font-bold">
+  <div class="row-mb-5">
+    <div class="row mb-2 flex justify-center">
+      <img src="{% static 'img/coruja.png' %}" class="w-48">
     </div>
-    <div class="mb-3">
-      <label class="form-label">Nova senha</label>
-      {{ form_senha.new_password1 }}
-      <p>{{ form_senha.new_password1.errors }}</p>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Confirmação de senha</label>
-      {{ form_senha.new_password2 }}
-      <p>{{ form_senha.new_password2.errors }}</p>
+    <div class="row text-center">
+      <h3 class="text-3xl font-bold mb-3">Alterar Senha</h3>
     </div>
 
-    <br>
-    <div class="mb-3">
-      <button type="submit" class="btn btn-primary">Alterar</button>
-      <a href="{% url 'perfil' %}"><input type="button" class="btn btn-secondary" value="Voltar"> </a>
+    <div class="row flex justify-center text-center">
+      <form class="w-1/2" action="{% url 'login' %}" method="POST">{% csrf_token %}
+        {% csrf_token %}
+        {{ form_senha.old_password.errors }}
+        {% for message in messages %}
+        <p id="messages">{{ message }}</p>
+        {% endfor %}
+
+        {{ form.errors }}
+
+        <div class="mb-3 text-center">
+          <label class="form-label">Senha antiga</label>
+          {{ form_senha.old_password }}
+        </div>
+        <div class="mb-3 text-center">
+          <label class="form-label">Nova senha</label>
+          {{ form_senha.new_password1 }}
+          <p>{{ form_senha.new_password1.errors }}</p>
+        </div>
+        <div class="mb-3 text-center">
+          <label class="form-label">Confirmação de senha</label>
+          {{ form_senha.new_password2 }}
+          <p>{{ form_senha.new_password2.errors }}</p>
+        </div>
+        <div class="mb-3 text-center">
+          <button type="submit"
+            class="bg-amber-500 w-100 hover:bg-amber-600 font-bold py-2 px-4 text-fuchsia-700 rounded">
+            Alterar
+          </button>
+        </div>
+      </form>
     </div>
-    <br>
-  </form>
+  </div>
+</div>
 
-  {% for message in messages %}
-  <p id="messages">{{ message }}</p>
-  {% endfor %}
+{% block scripts %}
+<script src="{% static 'js/forms.js' %}"></script>
+{% endblock scripts %}
 
-  {{ form.errors }}
-
-  {% endblock content %}
+{% endblock content %}

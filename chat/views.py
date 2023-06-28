@@ -39,7 +39,7 @@ def chat(request, room_id):
         return render(request, "lobby.html")
     else:
         chat_messages = retrieve_messages_from_json(room_id)
-        announcements = Announcement.objects.filter(room=room_id)[:4]
+        announcements = Announcement.objects.filter(room=room_id)[:7]
         roadmaps = Roadmap.objects.filter(room=room_id)[:4]
         context = {
             "room_id": room_id,

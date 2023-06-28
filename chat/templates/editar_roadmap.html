@@ -1,31 +1,26 @@
 {% extends 'main.html' %}
 {% load static %}
-{% block 'title' %}Painel Chat{% endblock %}
+{% block 'title' %}Editar Roadmap{% endblock %}
 {% block content %}
 
 
-<div class="container mt-5">
-    <img src="/static/img/coruja.png" width="72" height="72">
-
-
-    <h1>Create Form</h1>
-    <hr>
-
-
-    <head>
-        <title>Create Form</title>
-        {{ form.media }}
-    </head>
+<div class="col m-5 text-amber-500 font-bold">
+    <div class="row">
+        <h3 class="text-3xl font-bold mb-5">Editar Roadmap</h3>
+    </div>
+    {{ form.media }}
 
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        
-        <button type="submit" class="btn btn-primary">Salvar</button>
-        <a href="{% url 'roadmaps' room_id  %}"><input type="button" class="btn btn-secondary" value="Voltar"></a>
-
+        <button type="submit"
+            class="bg-amber-500 w-48 hover:bg-amber-600 font-bold py-2 px-2 text-fuchsia-700 rounded">Salvar</button>
     </form>
-
-    
+    <a href="{% url 'roadmaps' room_id  %}">
+        <button class="bg-amber-500 w-48 hover:bg-amber-600 font-bold py-2 px-2 text-fuchsia-700 my-3 rounded">
+            Voltar
+        </button>
+    </a>
 </div>
+<script src="{% static 'js/forms.js' %}"></script>
 {% endblock content %}
