@@ -4,194 +4,191 @@
 {% block content %}
 
 <style>
-  .message-text {
+  .message-text,
+  .announcement-class {
     word-break: break-word;
-
   }
 </style>
 
-<div class="container mt-5">
-  <img src="/static/img/coruja.png" width="72" height="72">
+<div class="row m-5 text-amber-500 font-bold">
+  <div class="row">
+    <h3 class="text-3xl font-bold mb-5">Chat virtual</h3>
+  </div>
 
-  <h1>PAINEL SALA</h1>
-  <hr>
-
-  <div class="container mt-2">
-    <div class="row g-2 needs-validation p-4">
-      <div class="col-md-12" style="background-color: #264653; text-align: center;">
-
-        <h2 class="">Guia de Estudos</h2>
-        <p> Últimas atualizações</p>
-
-        <div class="container">
-          <div class="row">
-            {% if roadmaps %}
-            {% for roadmap in roadmaps %}
-            <div class="col-md-2 m-5">
-              <div class="card m-2"
-                style="width: 250px; height: 250px; background-color: #14213d; text-align: center; color: white;">
-                <div class="card-body">
-                  <h5 class="card-title"><a href="{% url 'roadmap' room_id roadmap.id  %}">{{ roadmap.title }}</a>
-                  </h5>
-                  {% if roadmap.document_set.exists %}
-                  {% for document in roadmap.document_set.all %}
-                  <a href="{{ document.file.url }}" download>{{ document.title }}</a>
-                  {% if request.user.is_superuser %}
-                  <a href="{% url 'deletar_documento' room_id document.id %}">Excluir documento</a>
-                  {% endif %}
-                  {% endfor %}
-                  {% else %}
-                  <p>Nenhum documento disponível para este guia</p>
-                  {% endif %}
-                  {% if request.user.is_superuser %}
-                  <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{roadmap.id}}">Adicionar
-                    documento</a>
-                  {% endif %}
+  <div class="row flex flex-row">
+    <div class="col-2 h-96 bg-fuchsia-700 rounded-2xl text-center shadow-2xl">
+      <p class="text-2xl my-2">Últimos avisos</p>
+      <hr>
+      <ul class="list-group">
+        {% for announcement in announcements %}
+        <li class="p-1 bg-fuchsia-600 announcement-class">
+          <a data-bs-toggle="modal" data-bs-target="#exampleModal{{announcement.id}}"
+            class="card-link cursor-pointer">{{announcement.title}}</a>
+          <div class="modal fade" id="exampleModal{{announcement.id}}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">{{announcement.title}}</h5>
+                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  {{announcement.description}}
+                </div>
+                <div class="modal-footer">
+                  <button type="button"
+                    class="bg-amber-500 w-100 hover:bg-amber-600 font-bold py-2 px-4 text-fuchsia-700 rounded"
+                    data-bs-dismiss="modal">Voltar</button>
                 </div>
               </div>
             </div>
+          </div>
+        </li>
+        <hr>
+        {% endfor %}
+        <li><a href="{% url 'avisos' room_id %}">Ver todos...</a></li>
+      </ul>
+    </div>
+    <div class="col-10 h-96 bg-fuchsia-500 rounded-2xl shadow-2xl">
+      <form id="form">
+        <div id="scrollbar" style="overflow-y: scroll; height: 340px;">
+          <div class="m-2" id="messages">
+            {% for message in messages %}
+            <div>
+              <p class="message-text p-2 my-1 bg-fuchsia-200 text-fuchsia-700 rounded">
+                {{ message.sender }}: {{ message.text }}
+                <small>| {{ message.time}}</small>
+              </p>
+            </div>
             {% endfor %}
-            {% endif %}
           </div>
         </div>
-        <div class="container">
-          <a href="{% url 'roadmaps' room_id %}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle"
-              viewBox="0 0 16 16">
-              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-              <path
-                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-            </svg>
-          </a>
+        <div class="input-group mb-3">
+          <input type="text" name="messageInput" class="form-control" required>
+          <button class="btn btn-outline-info" type="submit" id="button-addon2">Enviar</button>
         </div>
-        <br>
-      </div>
-
-      <div class="col-md-4" style="background-color: #264653; text-align: center;">
-        <h2 class="mt-3">Avisos</h2>
-        <p> Últimas atualizações</p>
-        <ol class="list-group list-group-numbered">
-          {% for announcement in announcements %}
-          <li class="list-group-item d-flex" style="background-color: #778da9;">
-            <div class="ms-2 me-auto">
-
-              <div class="fw-bold" type="button" data-bs-toggle="modal"
-                data-bs-target="#exampleModal{{announcement.id}}">
-                {{ announcement.title }}
-              </div>
-
-            </div>
-          </li>
-          <br>
-          {% endfor %}
-        </ol>
-        <br>
-        <div class="container p-4">
-          <a href="{% url 'avisos' room_id %}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle"
-              viewBox="0 0 16 16">
-              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-              <path
-                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-8" style="background-color: #264653; text-align: center;">
-        <h2 class="mt-3">Chat</h2>
-
-        <form id="form">
-          <div id="scrollbar" style="overflow-y: scroll; height: 400px;">
-            <div id="messages">
-              {% for message in messages %}
-              <div>
-                <p class="message-text">{{ message.sender }}: {{ message.text }} <small>| {{ message.time }}</small>
-                </p>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-
-
-          <div class="input-group mb-3">
-            <input type="text" name="messageInput" class="form-control" required>
-            <button class="btn btn-outline-info" type="submit" id="button-addon2">Enviar</button>
-          </div>
-        </form>
-        <a href="{% url 'mensagens' room_id %}">Ver todas as mensagens...</a>
-        <a href="{% url 'editar_sala' room_id %}">Editar sala</a>
-        <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="card-link">Deletar sala</a>
-      </div>
-
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Deletar sala</h5>
-              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              Deseja mesmo deletar a sala?
-              {{room_id}}
-            </div>
-            <div class="modal-footer">
-              <form method="post" action="{% url 'deletar_sala' room_id %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger">Deletar</button>
-              </form>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      </form>
     </div>
   </div>
 
+  <div class="row mt-2 py-5 flex flex-row flex-wrap">
+    <div class="col bg-fuchsia-600 rounded-2xl shadow-2xl text-center">
+      <p class="text-2xl my-2">Guias de estudo</p>
+      <div class="row flex flex-row flex-wrap">
+        {% if roadmaps %}
+        {% for roadmap in roadmaps %}
+        <div class="bg-fuchsia-700 rounded shadow-2xl p-4 m-2 w-1/4">
+          <ul>
+            <li class="text-2xl text-center bg-fuchsia-800 my-2 hover:bg-fuchsia-950">
+              <a href="{% url 'roadmap' room_id roadmap.id  %}">{{ roadmap.title }}</a>
+            </li>
+            <li class="text-center bg-fuchsia-800 my-2">
+              {% if roadmap.document_set.exists %}
+              {% for document in roadmap.document_set.all %}
+              <a href="{{ document.file.url }}" download>
+            <li class="text-center bg-fuchsia-800 my-2">
+              <ion-icon class="mr-2" name="document"></ion-icon>{{ document.title}}
+            </li>
+            </a>
+            {% endfor %}
+            {% else %}
+            <p>Nenhum documento disponível para este guia</p>
+            {% endif %}
+            </li>
+          </ul>
+          {% endfor %}
+          {% else %}
+          <p class="mb-3">Nenhum guia de estudos disponível</p>
+          {% endif %}
+        </div>
+        <a href="{% url 'roadmaps' room_id %}" class="my-2">Ver todos...</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
-    crossorigin="anonymous"></script>
-  <script>
-    let path = window.location.pathname;
-    let pathParts = path.split('/');
-    let roomName = pathParts[pathParts.length - 2];
+{% if request.user.is_superuser %}
+<div class="col m-5">
+  {% if messages %}
+  <a class="bg-amber-500 w-48 my-2 hover:bg-amber-600 font-bold py-2 px-4 text-fuchsia-700 rounded"
+    href="{% url 'mensagens' room_id %}">Ver todas as mensagens...</a>
+  {% endif %}
+  <a class="bg-amber-500 w-48 my-1 hover:bg-amber-600 font-bold py-2 px-4 text-fuchsia-700 rounded"
+    href="{% url 'editar_sala' room_id %}">Editar sala</a>
+  <a class="bg-amber-500 w-48 my-1 hover:bg-amber-600 font-bold py-2 px-4 text-fuchsia-700 rounded cursor-pointer"
+    data-bs-toggle="modal" data-bs-target="#deleteModal">Deletar sala</a>
+</div>
+{% endif %}
 
-    let url = `ws://${window.location.host}/ws/socket-server/${roomName}/`
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Deletar sala</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Deseja mesmo deletar a sala?
+        {{room_id}}
+      </div>
+      <div class="modal-footer">
+        <form method="post" action="{% url 'deletar_sala' room_id %}">
+          {% csrf_token %}
+          <button type="submit" class="bg-red-500 hover:bg-red-600 p-2 rounded font-bold text-white">Deletar</button>
+        </form>
+        <button type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded font-bold text-white"
+          data-bs-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
-    const chatSocket = new WebSocket(url)
 
-    let form = document.getElementById('form')
-    form.addEventListener('submit', (e) => {
-      e.preventDefault()
-      let text = e.target.messageInput.value
-      let sender = "{{ request.user.username|escapejs }}"
-      let room = "{{ room_id }}"
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+  crossorigin="anonymous"></script>
+<script>
+  let path = window.location.pathname;
+  let pathParts = path.split('/');
+  let roomName = pathParts[pathParts.length - 2];
 
-      chatSocket.send(JSON.stringify({
-        'text': text,
-        'sender': sender,
-        'room': room
-      }))
-      form.reset()
-    })
+  let url = `ws://${window.location.host}/ws/socket-server/${roomName}/`
 
-    chatSocket.onmessage = function (e) {
-      let data = JSON.parse(e.data)
+  const chatSocket = new WebSocket(url)
 
-      if (data.type === 'chat') {
-        let messages = document.getElementById('messages')
-        let scrollbar = document.getElementById('scrollbar')
+  let form = document.getElementById('form')
+  form.addEventListener('submit', (e) => {
+    e.preventDefault()
+    let text = e.target.messageInput.value
+    let sender = "{{ request.user.username|escapejs }}"
+    let room = "{{ room_id }}"
 
-        messages.insertAdjacentHTML('beforeend', `<div>
-                                <p class="message-text">${data.sender}: ${data.text} <small>|  ${data.time}</small></p>
+    chatSocket.send(JSON.stringify({
+      'text': text,
+      'sender': sender,
+      'room': room
+    }))
+    form.reset()
+  })
+
+  chatSocket.onmessage = function (e) {
+    let data = JSON.parse(e.data)
+
+    if (data.type === 'chat') {
+      let messages = document.getElementById('messages')
+      let scrollbar = document.getElementById('scrollbar')
+
+      messages.insertAdjacentHTML('beforeend', `<div>
+                                <p class="message-text p-2 my-1 bg-fuchsia-200 text-fuchsia-700 rounded">${data.sender}: ${data.text} <small>|  ${data.time}</small></p>
                             </div>`)
 
-        scrollbar.scrollTop = messages.scrollHeight;
-      }
+      scrollbar.scrollTop = messages.scrollHeight;
     }
-  </script>
-  {% endblock content %}
+  }
+</script>
+{% endblock content %}

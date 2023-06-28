@@ -4,33 +4,52 @@
 
 {% block content %}
 
-<div class="container mt-5">
-    <img src="/static/img/coruja.png" width="72" height="72">
-
-    <h1>Salas virtuais disponiveis </h1>
-    <hr>
-
+<div class="col m-5 text-amber-500 font-bold">
     <div class="row">
-        <div class="col-sm-6">
-            <div class="input-group mb-3">
-                {% for room in user_rooms %}
-                <div class="card" style="width: 18rem; margin: 1%;">
-                    {% if room.image %}
-                    <img src="{{ room.image.url }}" class="card-img-top" alt="...">
-                    {% else %}
-                    <img src="/static/img/coruja.png" class="card-img-top" alt="...">
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ room.name }}</h5>
-                        <p class="card-text">{{ room.description }}</p> <br>
-                        <span>{{ room.members.count }} / {{ room.max_participants }}</span>
-                        <a href="{% url 'chat' room.id %}" class="btn btn-primary">Entrar</a>
-                    </div>
-                </div>
-                {% endfor %}
+        <h3 class="text-3xl font-bold mb-5">Minhas Salas</h3>
+    </div>
+
+    <div class="row flex flex-row flex-wrap text-amber-500">
+        {% for room in user_rooms %}
+        <div class="col-4 w-1/4 bg-fuchsia-700 rounded overflow-hidden shadow-2xl mx-1">
+            <div class="row">
+                {% if room.image %}
+                <img class="w-full h-72 p-1 px-2 rounded-2xl" src="{{ room.image.url }}" alt="Room image">
+                {% else %}
+                <img class="w-full h-72 p-1 px-2 rounded-2xl" src="{% static 'img/coruja.png' %}" class="card-img-top"
+                    alt="...">
+                {% endif %}
+            </div>
+            <div class="row">
+                <div class="font-bold text-xl mb-2">{{ room.name }}</div>
+            </div>
+            <div class="row h-24">
+                <p class="text-amber-500 text-base">
+                    {{ room.description }}
+                </p>
+                <hr>
+            </div>
+            <div class="row mb-2">
+                <p>Categoria: {{ room.category }}</p>
+            </div>
+            <div class="col flex flex-row justify-between items-center">
+                <a href="{% url 'chat' room.id %}"
+                    class="bg-amber-500 w-32 hover:bg-amber-600 font-bold mb-2 py-2 px-2 text-fuchsia-700 rounded">
+                    Entrar</a>
+
+                <span><ion-icon name="people" class="mr-2"></ion-icon>
+                    {{ room.members.count }} / {{ room.max_participants}}</span>
             </div>
         </div>
+        {% endfor %}
     </div>
+    <div class="row my-5 text-center">
+        <a href="{% url 'lobby' %}"
+            class="bg-amber-500 w-32 hover:bg-amber-600 font-bold py-2 px-2 text-fuchsia-700 rounded">
+            Voltar</a>
+    </div>
+
 </div>
+
 
 {% endblock content %}

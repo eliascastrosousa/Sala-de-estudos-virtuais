@@ -1,67 +1,69 @@
 {% extends 'main.html' %}
 {% load static %}
+{% block 'title' %}Avisos{% endblock %}
 
 {% block content %}
-    <div class="container mt-5">
-        <img src="/static/img/coruja.png" width="72" height="72">
+<div class="col m-5 text-amber-500 font-bold">
+    <div class="row">
+        <h3 class="text-3xl font-bold mb-5">Avisos</h3>
+    </div>
 
+    {% if request.user.is_superuser %}
+    <div class="mb-3">
+        <a class="bg-amber-500 w-48 hover:bg-amber-600 font-bold py-2 px-2 text-fuchsia-700 rounded"
+            href="{% url 'criar_aviso' room_id %}" role="button">Criar novo aviso</a>
+    </div>
+    {% endif %}
 
-        <h1>Quadro de Avisos</h1>
-        <hr>
-
-        {% if request.user.is_superuser %}
-        <a class="btn btn-primary" href="{% url 'criar_aviso' room_id %}" role="button">Criar novo aviso</a>
-        {% endif %}
-        <br>
-        <br>
-
-
-        {% for announcement in announcements %}
-        <div class="card p-2 m-2" style="width: 18rem; background-color: #14213d; color: white;">
-            <div class="card-body">
-                <h5 class="card-title"> {{ announcement.title }}</h5>
-                <h6 class="card-subtitle mb-2">Por: {{ announcement.created_by }}</h6>
-                <p class="card-text">{{ announcement.description }}</p>
+    <div class="row mb-5">
+        <ul>
+            {% for announcement in announcements %}
+            <div class="py-3">
+                <li class="text-2xl mb-2">Título: {{ announcement.title }}</li>
+                <li class="mb-2">Descrição: {{ announcement.description }}</li>
+                <li class="text-sm mb-4">Por: {{ announcement.created_by }}</li>
                 {% if request.user.is_superuser %}
-                <a href="{% url 'editar_aviso' room_id announcement.id %}" class="card-link">Editar</a>
-                <a data-bs-toggle="modal" data-bs-target="#exampleModal{{announcement.id}}" class="card-link">Deletar </a>
-                {% endif %}
+                <li class="underline"><a href="{% url 'editar_aviso' room_id announcement.id %}">Editar</a>
+                </li>
+                <li class="underline cursor-pointer"><a data-bs-toggle="modal"
+                        data-bs-target="#exampleModal{{announcement.id}}">Deletar
+                    </a></li>
             </div>
-        </div>
-        {% endfor %}
-        <br>
-        <a href="{% url 'chat' room_id %}"><input type="button" class="btn btn-secondary" value="Voltar"></a>
 
-        {% for announcement in announcements %}
-            {% if request.user.is_superuser %}
-
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal{{announcement.id}}" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title text-black" id="exampleModalLabel">"{{ announcement.title }}"</h5>
-                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body text-black">
-                                Deseja mesmo deletar o aviso "{{ announcement.title }}?"
-                            </div>
-                            <div class="modal-footer">
-                                <form method="post" action="{% url 'deletar_aviso' room_id announcement.id %}">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger">Deletar</button>
-                                </form>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
-                            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal{{announcement.id}}" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-black" id="exampleModalLabel">"{{ announcement.title }}"</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-black">
+                            Deseja mesmo deletar o aviso "{{ announcement.title }}?"
+                        </div>
+                        <div class="modal-footer">
+                            <form method="post" action="{% url 'deletar_aviso' room_id announcement.id %}">
+                                {% csrf_token %}
+                                <button type="submit"
+                                    class="bg-red-500 hover:bg-red-600 p-2 rounded font-bold text-white">Deletar</button>
+                            </form>
+                            <button type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded font-bold text-white"
+                                data-bs-dismiss="modal">Voltar</button>
                         </div>
                     </div>
                 </div>
-
+            </div>
             {% endif %}
-        {% endfor %}
-
+            <hr>
+            {% endfor %}
+        </ul>
     </div>
+
+    <a href="{% url 'chat' room_id %}"><input type="button"
+            class="bg-amber-500 w-48 hover:bg-amber-600 font-bold py-2 px-2 text-fuchsia-700 rounded"
+            value="Voltar"></a>
+</div>
 {% endblock content %}

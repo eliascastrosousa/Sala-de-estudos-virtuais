@@ -4,57 +4,55 @@
 
 {% block content %}
 
-<div class="container mt-5">
-    <img src="/static/img/coruja.png" width="72" height="72">
+<div class="col m-5 text-amber-500 font-bold">
+    <div class="row">
+        <h3 class="text-3xl font-bold mb-5">Criar Sala</h3>
+    </div>
 
+    <div class="row flex">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
 
-    <h1>
-        Criar Sala Virtual
-    </h1>
-    <hr>
-    <br>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+            <div class="col-sm-6 mb-3">
+                <label class="form-label mb-2">Nome:</label>
+                <input type="text" class="form-control" name="nome" id="nome" required>
+            </div>
 
-        <div class="col-sm-6 mb-3">
-            <label class="form-label mb-2">Nome:</label>
-            <input type="text" class="form-control" name="nome" id="nome" required>
-        </div>
+            <div class="col-sm-6 mb-3">
+                <label class="form-label mb-2">Descrição:</label>
+                <input type="text" class="form-control" name="descricao" id="descricao" required>
+            </div>
 
-        <div class="col-sm-6 mb-3">
-            <label class="form-label mb-2">Descrição:</label>
-            <input type="text" class="form-control" name="descricao" id="descricao" required>
-        </div>
+            <div class="col-sm-6 mb-3">
+                <label class="form-label mb-2">Categoria:</label>
+                <select name="categoria" id="categoria" class="form-control" required>
+                    <option selected disabled>Selecione Aqui</option>
+                    {% for category in categories %}
+                    <option value="{{ category.name }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+                <a class="cursor-pointer underline" href="{% url 'adicionar_categoria' %}">Cadastrar
+                    Categoria</a>
+            </div>
 
-        <div class="col-sm-6 mb-3">
-            <label class="form-label mb-2">Categoria:</label>
-            <select name="categoria" id="categoria" class="form-control" required>
-                <option selected disabled>Selecione Aqui</option>
-                {% for category in categories %}
-                <option value="{{ category.name }}">{{ category.name }}</option>
-                {% endfor %}
-            </select>
-            <a href="{% url 'adicionar_categoria' %}"> <label class="form-label mb-2">Cadastrar
-                    Categoria</label></a>
+            <div class="col-sm-6 mb-3">
+                <label class="form-label mb-2">Limite:</label>
+                <input type="number" class="form-control" name="limite" value="1" min="1" max="99" required>
+            </div>
 
-        </div>
+            <div class="mb-3">
+                <label for="imagem" class="text-3xl mb-2" id="imagem">Imagem:</label>
+                <input type="file" name="imagem" id="imagem">
+            </div>
 
-        <div class="col-sm-6 mb-3">
-            <label class="form-label mb-2">Limite:</label>
-            <input type="number" class="form-control" name="limite" value="1" min="1" max="99" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="imagem" class="text-3xl mb-2" id="imagem">Imagem:</label>
-            <input type="file" name="imagem" id="imagem">
-        </div>
-
-        <div class="mb-3">
-            <button type="submit" class="btn btn-success">Criar</button>
-            <a href="{% url 'lobby'  %}"><input type="button" class="btn btn-secondary" value="Voltar"></a>
-        </div>
-    </form>
-
+            <div class="mb-3">
+                <button type="submit"
+                    class="bg-amber-500 w-32 hover:bg-amber-600 font-bold py-2 px-4 text-fuchsia-700 rounded">Criar</button>
+            </div>
+        </form>
+        <a href="{% url 'lobby' %}"><button
+                class="bg-amber-500 w-32 hover:bg-amber-600 font-bold py-2 px-4 text-fuchsia-700 rounded">Voltar</button></a>
+    </div>
 </div>
 
 {% endblock content %}
