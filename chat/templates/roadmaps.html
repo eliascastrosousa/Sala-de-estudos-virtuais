@@ -82,10 +82,10 @@
             <p class="mb-3">Nenhum guia de estudos disponível</p>
             {% endif %}
         </div>
-        <a href="{% url 'chat' room_id %}"
-            class="bg-amber-500 w-48 hover:bg-amber-600 font-bold py-2 px-4 text-fuchsia-700 rounded">Voltar</a>
     </div>
 </div>
+<a href="{% url 'chat' room_id %}"
+    class="bg-amber-500 w-48 hover:bg-amber-600 font-bold m-5 py-2 px-4 text-fuchsia-700 rounded">Voltar</a>
 <script src="{% static 'js/forms.js' %}"></script>
 
 {% endblock content %}
